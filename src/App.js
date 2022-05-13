@@ -1,41 +1,29 @@
+import { useLocation } from "react-router-dom";
 import "./App.css";
-import logo from "./logo.png";
+import { AppRoutes } from "./app-routes/AppRoutes";
+import { FollowTab, SideBar, MobileBottomBar, CreatePostBtn } from "./layouts";
+import { CreatePostModal } from "./components";
+import { useTheme } from "./hooks";
 
 function App() {
+  const { theme } = useTheme();
+  const { pathname } = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} alt="mockBee logo" width="180" height="180" />
-        <h1 className="brand-title">
-          Welcome to <span>mockBee!</span>
-        </h1>
-        <p className="brand-description">
-          Get started by editing <code>src/App.js</code>
-        </p>
-        <div className="links">
-          <a
-            href="https://mockbee.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Explore mockBee
-          </a>
-          <a
-            href="https://mockbee.netlify.app/docs/api/introduction"
-            target="_blank"
-            rel="noreferrer"
-          >
-            API Documentation
-          </a>
-          <a
-            href="https://github.com/neogcamp/mockBee"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Contribute
-          </a>
-        </div>
-      </header>
+    <div
+      className={
+        theme === "dark" ? "dark text-white bg-gray-800" : "bg-gray-100"
+      }
+    >
+      <div
+        className={pathname !== "/" && pathname !== "/signup" ? "app-main" : ""}
+      >
+        <CreatePostBtn />
+        {pathname !== "/" && pathname !== "/signup" && <SideBar />}
+        <AppRoutes />
+        {pathname !== "/" && pathname !== "/signup" && <FollowTab />}
+        <MobileBottomBar />
+        <CreatePostModal />
+      </div>
     </div>
   );
 }
