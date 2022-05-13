@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FiLogOut } from "react-icons/fi";
 import {
   Post,
   PrimaryOutlinedButton,
@@ -15,7 +16,7 @@ const Profile = () => {
       {showEditProfile && (
         <EditProfileModal toggleEditProfile={toggleEditProfile} />
       )}
-      <div className="flex flex-col gap-5 items-center mx-auto pt-5 text-center max-w-lg">
+      <div className="relative flex flex-col gap-5 items-center mx-auto pt-5 text-center max-w-lg">
         <div className="w-40 h-28">
           <img
             className="rounded-full m-auto"
@@ -23,6 +24,7 @@ const Profile = () => {
             alt="user image"
           />
         </div>
+        <FiLogOut className="absolute cursor-pointer top-5 right-2 text-xl" />
         <div className="flex flex-col gap-2 mt-4">
           <p>John Doe</p>
           <p className="text-slate-400">@Johndoe</p>
