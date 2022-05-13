@@ -1,13 +1,17 @@
 import React from "react";
 import {
   MdOutlineHome,
+  MdHome,
   MdOutlineExplore,
+  MdExplore,
   MdOutlineBookmarkBorder,
-  MdOutlinePersonOutline,
+  MdBookmark,
   MdOutlineWbSunny,
+  MdOutlinePersonOutline,
+  MdPerson,
 } from "react-icons/md";
 import { HiOutlineMoon } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useTheme } from "../../hooks";
 
 const MobileBottomBar = () => {
@@ -15,37 +19,41 @@ const MobileBottomBar = () => {
   return (
     <ul className="flex sm:hidden justify-between fixed bottom-0 right-0 left-0 p-2 bg-slate-200 dark:bg-black text-[28px]">
       <li>
-        <Link
+        <NavLink
           to={"/home"}
           className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
         >
-          <MdOutlineHome />
-        </Link>
+          {({ isActive }) => (isActive ? <MdHome /> : <MdOutlineHome />)}
+        </NavLink>
       </li>
 
       <li>
-        <Link
+        <NavLink
           to={"/explore"}
           className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
         >
-          <MdOutlineExplore />
-        </Link>
+          {({ isActive }) => (isActive ? <MdExplore /> : <MdOutlineExplore />)}
+        </NavLink>
       </li>
       <li>
-        <Link
+        <NavLink
           to={"/bookmarks"}
           className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
         >
-          <MdOutlineBookmarkBorder />
-        </Link>
+          {({ isActive }) =>
+            isActive ? <MdBookmark /> : <MdOutlineBookmarkBorder />
+          }
+        </NavLink>
       </li>
       <li>
-        <Link
+        <NavLink
           to={"/profile"}
           className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
         >
-          <MdOutlinePersonOutline />
-        </Link>
+          {({ isActive }) =>
+            isActive ? <MdPerson /> : <MdOutlinePersonOutline />
+          }
+        </NavLink>
       </li>
       {theme === "dark" ? (
         <li className="p-2 block xl:hidden text-10xl">

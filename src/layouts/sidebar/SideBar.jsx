@@ -1,13 +1,15 @@
 import React from "react";
 import {
   MdOutlineHome,
+  MdHome,
   MdOutlineExplore,
+  MdExplore,
   MdOutlineBookmarkBorder,
-  MdOutlinePersonOutline,
+  MdBookmark,
   MdOutlineWbSunny,
 } from "react-icons/md";
 import { HiOutlineMoon } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { usePostModal, useTheme } from "../../hooks";
 import { PrimaryButton } from "../../components";
 
@@ -18,42 +20,86 @@ const SideBar = () => {
     <div className="hidden sm:flex flex-col justify-between sticky h-screen top-0 py-3">
       <ul className="p-4 flex flex-col gap-y-5 bg-slate-100 rounded dark:bg-slate-800">
         <li>
-          <Link
+          <NavLink
             to={"/home"}
             className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 text-3xl"
           >
-            <MdOutlineHome />
-            <p className="ml-3 text-xl hidden xl:block">Home</p>
-          </Link>
+            {({ isActive }) =>
+              isActive ? (
+                <>
+                  <div className="xl:mr-2 flex">
+                    <MdHome />
+                  </div>
+                  <span className="ml-3 text-xl hidden xl:block font-bold">
+                    Home
+                  </span>
+                </>
+              ) : (
+                <>
+                  <div className="xl:mr-2 flex">
+                    <MdOutlineHome />
+                  </div>
+                  <span className="ml-3 text-xl hidden xl:block">Home</span>
+                </>
+              )
+            }
+          </NavLink>
         </li>
 
         <li>
-          <Link
+          <NavLink
             to={"/explore"}
             className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 text-3xl"
           >
-            <MdOutlineExplore />
-            <p className="ml-3 text-xl hidden xl:block">Explore</p>
-          </Link>
+            {({ isActive }) =>
+              isActive ? (
+                <>
+                  <div className="xl:mr-2 flex">
+                    <MdExplore />
+                  </div>
+                  <span className="ml-3 text-xl hidden xl:block font-bold">
+                    Explore
+                  </span>
+                </>
+              ) : (
+                <>
+                  <div className="xl:mr-2 flex">
+                    <MdOutlineExplore />
+                  </div>
+                  <span className="ml-3 text-xl hidden xl:block">Explore</span>
+                </>
+              )
+            }
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to={"/bookmarks"}
             className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 text-3xl"
           >
-            <MdOutlineBookmarkBorder />
-            <p className="ml-3  text-xl hidden xl:block">Bookmarks</p>
-          </Link>
+            {({ isActive }) =>
+              isActive ? (
+                <>
+                  <div className="xl:mr-2 flex">
+                    <MdBookmark />
+                  </div>
+                  <span className="ml-3 text-xl hidden xl:block font-bold">
+                    Bookmarks
+                  </span>
+                </>
+              ) : (
+                <>
+                  <div className="xl:mr-2 flex">
+                    <MdOutlineBookmarkBorder />
+                  </div>
+                  <span className="ml-3 text-xl hidden xl:block">
+                    Bookmarks
+                  </span>
+                </>
+              )
+            }
+          </NavLink>
         </li>
-        {/* <li>
-          <Link
-            to={"/profile"}
-            className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 text-3xl"
-          >
-            <MdOutlinePersonOutline />
-            <p className="ml-3 text-xl hidden xl:block">Profile</p>
-          </Link>
-        </li> */}
         <li className="hidden xl:block">
           <PrimaryButton fullWidth={true} clickHandler={toggleTheme}>
             Toggle theme
@@ -89,10 +135,10 @@ const SideBar = () => {
           />
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
-          <Link to={"/profile"}>
+          <NavLink to={"/profile"}>
             <p>John Doe</p>
             <p className="text-slate-400">@Johndoe</p>
-          </Link>
+          </NavLink>
         </div>
       </div>
     </div>
