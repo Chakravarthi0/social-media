@@ -12,7 +12,7 @@ const Post = () => {
     setShowPostOptions((prev) => !prev);
   };
   return (
-    <div className="relative flex gap-x-5 my-3 rounded-xl p-5">
+    <div className="relative flex gap-x-5 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700">
       <div
         className="absolute top-0 right-0 cursor-pointer text-2xl"
         onClick={toggleShowOptions}
