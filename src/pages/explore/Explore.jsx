@@ -1,5 +1,4 @@
-import React from "react";
-import { Post, CreatePost } from "../../components";
+import { Post } from "../../components";
 
 const Explore = () => {
   return (

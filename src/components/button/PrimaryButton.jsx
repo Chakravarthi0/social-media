@@ -1,5 +1,3 @@
-import React from "react";
-
 const PrimaryButton = ({ fullWidth, clickHandler, children }) => {
   return (
     <button

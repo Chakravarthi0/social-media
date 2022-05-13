@@ -1,4 +1,3 @@
-import React from "react";
 import { MdClose } from "react-icons/md";
 import { usePostModal } from "../../hooks";
 import { PrimaryButton, PrimaryOutlinedButton } from "../button";

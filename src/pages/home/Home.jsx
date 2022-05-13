@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { GiSettingsKnobs } from "react-icons/gi";
 import { FiTrendingUp } from "react-icons/fi";
 import { BsSortDown, BsSortUp } from "react-icons/bs";

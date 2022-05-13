@@ -1,9 +1,6 @@
-import React from "react";
 import { PrimaryButton } from "../";
-import { usePostModal } from "../../hooks";
 
 const CreatePost = () => {
-  const { toggleShowPostModal } = usePostModal();
   const handlePost = (event) => {
     event.preventDefault();
   };

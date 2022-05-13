@@ -1,4 +1,3 @@
-import React from "react";
 import { FiCamera } from "react-icons/fi";
 import { PrimaryButton, PrimaryOutlinedButton } from "../";
 

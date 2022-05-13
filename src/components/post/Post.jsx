@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { BsPencil, BsTrash } from "react-icons/bs";

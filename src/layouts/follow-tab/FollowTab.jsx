@@ -1,4 +1,3 @@
-import React from "react";
 import { HorizontalProfile } from "../../components";
 
 const FollowTab = () => {

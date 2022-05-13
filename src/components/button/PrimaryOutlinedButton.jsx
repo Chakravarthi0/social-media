@@ -1,5 +1,3 @@
-import React from "react";
-
 const PrimaryOutlinedButton = ({ fullWidth, clickHandler, children }) => {
   return (
     <button
