@@ -5,5 +5,8 @@ export { HorizontalProfile } from "./horizontal-profile/HorizontalProfile";
 export { Post } from "./post/Post";
 export { CreatePost } from "./create-post/CreatePost";
 export { CreatePostModal } from "./create-post-modal/CreatePostModal";
-export {EditProfileModal} from "./edit-profile-modal/EditProfileModal"
-export {Comment} from "./comment/Comment"
+export { EditProfileModal } from "./edit-profile-modal/EditProfileModal";
+export { Comment } from "./comment/Comment";
+export { PasswordInput } from "./password-input/PasswordInput";
+export { Loader } from "./loader/Loader";
+export { LoaderOverlay } from "./loader-overlay/LoaderOverlay";

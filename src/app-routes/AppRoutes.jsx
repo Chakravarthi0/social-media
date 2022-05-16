@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ProtectedRoutes from "./ProtectedRoutes";
 import {
   Home,
   Explore,
@@ -7,18 +9,32 @@ import {
   Profile,
   SignIn,
   SinglePost,
+  NotFound,
 } from "../pages";
 
 const AppRoutes = () => {
+  const token = useSelector((state) => state.auth.token);
   return (
     <Routes>
-      <Route path="/" element={<SignIn />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/explore" element={<Explore />} />
-      <Route path="/bookmarks" element={<Bookmarks />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/posts" element={<SinglePost />} />
+      {!token ? (
+        <>
+          <Route path="/" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+        </>
+      ) : (
+        <>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/signup" element={<Navigate to="/home" />} />
+        </>
+      )}
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/home" element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/bookmarks" element={<Bookmarks />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/posts" element={<SinglePost />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
