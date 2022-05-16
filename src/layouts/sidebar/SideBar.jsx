@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   MdOutlineHome,
   MdHome,
@@ -8,13 +9,18 @@ import {
   MdOutlineWbSunny,
 } from "react-icons/md";
 import { HiOutlineMoon } from "react-icons/hi";
-import { NavLink } from "react-router-dom";
+import { BsPencil } from "react-icons/bs";
+import { NavLink, useNavigate } from "react-router-dom";
 import { usePostModal, useTheme } from "../../hooks";
 import { PrimaryButton } from "../../components";
 
 const SideBar = () => {
+  const { firstName, lastName, username } = useSelector(
+    (state) => state.auth.userDetails
+  );
   const { toggleTheme, theme } = useTheme();
   const { toggleShowPostModal } = usePostModal();
+  const navigate = useNavigate();
   return (
     <div className="hidden sm:flex flex-col justify-between sticky h-screen top-0 py-3">
       <ul className="p-4 flex flex-col gap-y-5 bg-slate-100 rounded dark:bg-slate-800">
@@ -124,8 +130,19 @@ const SideBar = () => {
             Create post
           </PrimaryButton>
         </li>
+        <li>
+          <div
+            className="flex justify-center items-center bg-blue-500 w-12 h-12 rounded-full text-2xl xl:hidden"
+            onClick={toggleShowPostModal}
+          >
+            <BsPencil />
+          </div>
+        </li>
       </ul>
-      <div className="flex mb-3 p-4 cursor-pointer rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600">
+      <div
+        className="flex mb-3 p-4 cursor-pointer rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600"
+        onClick={() => navigate("/profile")}
+      >
         <div className="w-12 h-12 flex-shrink-0">
           <img
             className="rounded-full shadow-sm"
@@ -134,10 +151,8 @@ const SideBar = () => {
           />
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
-          <NavLink to={"/profile"}>
-            <p>John Doe</p>
-            <p className="text-slate-400">@Johndoe</p>
-          </NavLink>
+          <p>{`${firstName} ${lastName}`}</p>
+          <p className="text-slate-400">@{username}</p>
         </div>
       </div>
     </div>
