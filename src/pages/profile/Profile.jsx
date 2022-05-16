@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FiLogOut } from "react-icons/fi";
 import {
   Post,
   PrimaryOutlinedButton,
   EditProfileModal,
 } from "../../components";
+import { signOut } from "../../features";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const { firstName, lastName, username } = useSelector(
+    (state) => state.auth.userDetails
+  );
   const [showEditProfile, setShowEditProfile] = useState(false);
   const toggleEditProfile = () => {
     setShowEditProfile((prev) => !prev);
@@ -24,10 +30,13 @@ const Profile = () => {
             alt="user image"
           />
         </div>
-        <FiLogOut className="absolute cursor-pointer top-5 right-2 text-xl" />
+        <FiLogOut
+          className="absolute cursor-pointer top-5 right-2 text-xl"
+          onClick={() => dispatch(signOut())}
+        />
         <div className="flex flex-col gap-2 mt-4">
-          <p>John Doe</p>
-          <p className="text-slate-400">@Johndoe</p>
+          <p>{`${firstName} ${lastName}`}</p>
+          <p className="text-slate-400">@{username}</p>
           <PrimaryOutlinedButton clickHandler={toggleEditProfile}>
             Edit profile
           </PrimaryOutlinedButton>
