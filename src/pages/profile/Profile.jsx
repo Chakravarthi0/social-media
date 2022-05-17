@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiLogOut } from "react-icons/fi";
@@ -24,6 +24,11 @@ const Profile = () => {
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setshowFollowing] = useState(false);
+
+  useEffect(() => {
+    setshowFollowing(false);
+    setShowFollowers(false);
+  }, []);
 
   return (
     <div className="relative">
