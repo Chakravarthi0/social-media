@@ -46,6 +46,9 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = payload;
     });
+    builder.addCase("user/update/fulfilled", (state, { payload }) => {
+      state.userDetails.profileUrl = payload.user.profileUrl;
+    });
   },
 });
 
