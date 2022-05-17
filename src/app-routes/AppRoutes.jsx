@@ -31,7 +31,7 @@ const AppRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
         <Route path="/posts" element={<SinglePost />} />
       </Route>
       <Route path="*" element={<NotFound />} />

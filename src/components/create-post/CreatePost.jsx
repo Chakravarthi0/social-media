@@ -1,16 +1,26 @@
-import { PrimaryButton } from "../";
+import { useSelector } from "react-redux";
+import { PrimaryButton, DefaultProfilePic, Loader } from "../";
 
 const CreatePost = () => {
+  const {
+    auth: {
+      userDetails: { profileUrl, firstName, lastName },
+    },
+    user: { uploadingImg },
+  } = useSelector((state) => state);
   const handlePost = (event) => {
     event.preventDefault();
   };
   return (
     <div className="px-5 py-3 border-lighter flex">
-      <div className="flex-none mt-3">
-        <img
-          src="https://randomuser.me/api/portraits/men/11.jpg"
-          className="flex-none w-12 h-12 rounded-full"
-        />
+      <div className="flex-none mt-3 w-12 h-12 text-lg">
+        {uploadingImg ? (
+          <Loader />
+        ) : profileUrl ? (
+          <img src={profileUrl} className="flex-none w-12 h-12 rounded-full" />
+        ) : (
+          <DefaultProfilePic>{firstName[0] + lastName[0]}</DefaultProfilePic>
+        )}
       </div>
       <form className="w-full px-4 relative">
         <textarea
