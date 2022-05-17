@@ -15,7 +15,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUsers, openPostModal } from "../../features";
 import { useTheme } from "../../hooks";
-import { PrimaryButton, DefaultProfilePic } from "../../components";
+import { PrimaryButton, DefaultProfilePic, Loader } from "../../components";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -25,12 +25,11 @@ const SideBar = () => {
       userDetails: { username },
       token,
     },
-    user: { users },
+    user: { users, uploadingImg },
   } = useSelector((state) => state);
   const currentUserDetails = users?.find((user) => user.username === username);
   const { toggleTheme, theme } = useTheme();
   const navigate = useNavigate();
-
   useEffect(() => {
     dispatch(getUsers());
   }, [token, dispatch]);
@@ -156,7 +155,9 @@ const SideBar = () => {
         onClick={() => navigate(`/profile/${currentUserDetails?.username}`)}
       >
         <div className="w-12 h-12 flex-shrink-0 text-lg">
-          {currentUserDetails?.profileUrl ? (
+          {uploadingImg ? (
+            <Loader />
+          ) : currentUserDetails?.profileUrl ? (
             <img
               className="rounded-full shadow-sm  w-[100%] h-[100%]"
               src={currentUserDetails?.profileUrl}

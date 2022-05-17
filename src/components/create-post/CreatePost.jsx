@@ -1,17 +1,22 @@
 import { useSelector } from "react-redux";
-import { PrimaryButton, DefaultProfilePic } from "../";
+import { PrimaryButton, DefaultProfilePic, Loader } from "../";
 
 const CreatePost = () => {
-  const { profileUrl, firstName, lastName } = useSelector(
-    (state) => state.auth.userDetails
-  );
+  const {
+    auth: {
+      userDetails: { profileUrl, firstName, lastName },
+    },
+    user: { uploadingImg },
+  } = useSelector((state) => state);
   const handlePost = (event) => {
     event.preventDefault();
   };
   return (
     <div className="px-5 py-3 border-lighter flex">
       <div className="flex-none mt-3 w-12 h-12 text-lg">
-        {profileUrl ? (
+        {uploadingImg ? (
+          <Loader />
+        ) : profileUrl ? (
           <img src={profileUrl} className="flex-none w-12 h-12 rounded-full" />
         ) : (
           <DefaultProfilePic>{firstName[0] + lastName[0]}</DefaultProfilePic>

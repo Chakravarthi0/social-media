@@ -24,6 +24,7 @@ const EditProfileModal = ({ currentUser, setShowEditProfile }) => {
     e.preventDefault();
     if (imageUrl) {
       dispatch(uploadImg());
+      setShowEditProfile(false);
       const file = imageUrl;
       const formData = new FormData();
       formData.append("file", file);
@@ -51,8 +52,8 @@ const EditProfileModal = ({ currentUser, setShowEditProfile }) => {
       setImageUrl("");
     } else {
       dispatch(updateUser({ token, userDetails: updatedValue }));
+      setShowEditProfile(false);
     }
-    setShowEditProfile(false);
   };
 
   return (

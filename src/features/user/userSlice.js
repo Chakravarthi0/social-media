@@ -3,7 +3,7 @@ import { getUsers, followUser, unFollowUser, updateUser } from "./helpers";
 
 const initialState = {
   loading: false,
-  uploadingPhoto: false,
+  uploadingImg: false,
   error: "",
   users: [],
 };
@@ -13,7 +13,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     uploadImg: (state) => {
-      state.uploadingPhoto = true;
+      state.uploadingImg = true;
     },
   },
   extraReducers: (builder) => {
@@ -70,16 +70,19 @@ const userSlice = createSlice({
       state.error = true;
     });
     builder.addCase(updateUser.pending, (state) => {
+      state.uploadingImg = true;
       state.loading = true;
       state.error = false;
     });
     builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      state.uploadingImg = false;
       state.loading = false;
       state.users = state.users.map((user) =>
         user.username === payload.user.username ? payload.user : user
       );
     });
     builder.addCase(updateUser.rejected, (state) => {
+      state.uploadingImg = false;
       state.loading = false;
       state.error = true;
     });

@@ -2,7 +2,12 @@ import { useRef, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { closePostModal } from "../../features";
-import { PrimaryButton, PrimaryOutlinedButton, DefaultProfilePic } from "../";
+import {
+  PrimaryButton,
+  PrimaryOutlinedButton,
+  DefaultProfilePic,
+  Loader,
+} from "../";
 
 const CreatePostModal = () => {
   const dispatch = useDispatch();
@@ -19,6 +24,7 @@ const CreatePostModal = () => {
     auth: {
       userDetails: { profileUrl, firstName, lastName },
     },
+    user: { uploadingImg },
     post: { showPostModal },
   } = useSelector((state) => state);
 
@@ -62,7 +68,9 @@ const CreatePostModal = () => {
           onClick={() => dispatch(closePostModal())}
         />
         <div className="flex-none mt-3 h-12 w-12">
-          {profileUrl ? (
+          {uploadingImg ? (
+            <Loader />
+          ) : profileUrl ? (
             <img
               src={profileUrl}
               className="flex-none w-12 h-12 rounded-full hidden sm:block"

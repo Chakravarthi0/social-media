@@ -9,6 +9,7 @@ import {
   PrimaryButton,
   UserListModal,
   DefaultProfilePic,
+  Loader,
 } from "../../components";
 import { followUser, signOut, unFollowUser } from "../../features";
 
@@ -16,7 +17,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { username } = useParams();
   const {
-    user: { users },
+    user: { users, uploadingImg },
     auth: { token, userDetails: authUserDetails },
   } = useSelector((state) => state);
   const currentUserDetails = users?.find((user) => user.username === username);
@@ -49,8 +50,10 @@ const Profile = () => {
         />
       )}
       <div className="relative flex flex-col gap-5 items-center mx-auto pt-5 text-center max-w-lg">
-        <div className="w-32 h-32 text-3xl">
-          {currentUserDetails?.profileUrl ? (
+        <div className="w-32 h-32 text-3xl flex justify-center items-center">
+          {uploadingImg ? (
+            <Loader />
+          ) : currentUserDetails?.profileUrl ? (
             <img
               className="rounded-full m-auto w-[100%] h-[100%]"
               src={currentUserDetails?.profileUrl}
