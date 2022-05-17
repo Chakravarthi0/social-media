@@ -1,4 +1,15 @@
 import authReducer, { signOut } from "./auth/authSlice";
-export { signInUser, signUpUser } from "./auth/helpers";
+import userReducer, { uploadImg } from "./user/userSlice";
+import postReducer, { openPostModal, closePostModal } from "./post/postSlice";
 
-export { authReducer, signOut };
+export { signInUser, signUpUser } from "./auth/helpers";
+export { getUsers, followUser, unFollowUser, updateUser } from "./user/helpers";
+export {
+  authReducer,
+  signOut,
+  userReducer,
+  uploadImg,
+  postReducer,
+  openPostModal,
+  closePostModal,
+};
