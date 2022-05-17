@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FiCamera } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
-import { PrimaryButton, PrimaryOutlinedButton } from "../";
+import { PrimaryButton, PrimaryOutlinedButton, DefaultProfilePic } from "../";
 import { useDetectClick } from "../../hooks";
 import { updateUser, uploadImg } from "../../features";
 import toast from "react-hot-toast";
@@ -73,19 +73,21 @@ const EditProfileModal = ({ currentUser, setShowEditProfile }) => {
             </h1>
 
             <div className="relative w-24 h-24 m-auto">
-              <img
-                className="rounded-[50%] h-[100%] w-[100%] m-auto"
-                src={
-                  imageUrl
-                    ? URL.createObjectURL(imageUrl)
-                    : currentUser?.profileUrl
-                }
-                alt="user image"
-              />
-              {/* <div className="absolute right-0 bottom-0 flex justify-center items-center h-9 w-9 bg-black  text-white dark:bg-white dark:text-black rounded-full">
-                <FiCamera className="text-xl cursor-pointer" />
-              </div> */}
-
+              {currentUser?.profileUrl || imageUrl ? (
+                <img
+                  className="rounded-[50%] h-[100%] w-[100%] m-auto"
+                  src={
+                    imageUrl
+                      ? URL.createObjectURL(imageUrl)
+                      : currentUser?.profileUrl
+                  }
+                  alt="user image"
+                />
+              ) : (
+                <DefaultProfilePic>
+                  {currentUser?.firstName[0] + currentUser?.lastName[0]}
+                </DefaultProfilePic>
+              )}
               <label className="absolute right-0 bottom-0 flex justify-center items-center h-9 w-9 bg-black  text-white dark:bg-white dark:text-black rounded-full">
                 <input
                   className="hidden"

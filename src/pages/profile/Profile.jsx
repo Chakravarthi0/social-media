@@ -8,6 +8,7 @@ import {
   EditProfileModal,
   PrimaryButton,
   UserListModal,
+  DefaultProfilePic,
 } from "../../components";
 import { followUser, signOut, unFollowUser } from "../../features";
 
@@ -48,12 +49,19 @@ const Profile = () => {
         />
       )}
       <div className="relative flex flex-col gap-5 items-center mx-auto pt-5 text-center max-w-lg">
-        <div className="w-40 h-28">
-          <img
-            className="rounded-full m-auto"
-            src={currentUserDetails?.profileUrl}
-            alt="user image"
-          />
+        <div className="w-32 h-32 text-3xl">
+          {currentUserDetails?.profileUrl ? (
+            <img
+              className="rounded-full m-auto w-[100%] h-[100%]"
+              src={currentUserDetails?.profileUrl}
+              alt="user image"
+            />
+          ) : (
+            <DefaultProfilePic>
+              {currentUserDetails?.firstName[0] +
+                currentUserDetails?.lastName[0]}
+            </DefaultProfilePic>
+          )}
         </div>
         {authUserDetails?.username === currentUserDetails?.username && (
           <FiLogOut

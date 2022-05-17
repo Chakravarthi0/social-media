@@ -15,7 +15,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUsers, openPostModal } from "../../features";
 import { useTheme } from "../../hooks";
-import { PrimaryButton } from "../../components";
+import { PrimaryButton, DefaultProfilePic } from "../../components";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -155,12 +155,19 @@ const SideBar = () => {
         className="flex mb-3 p-4 cursor-pointer rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600"
         onClick={() => navigate(`/profile/${currentUserDetails?.username}`)}
       >
-        <div className="w-12 h-12 flex-shrink-0">
-          <img
-            className="rounded-full shadow-sm"
-            src={currentUserDetails?.profileUrl}
-            alt="user image"
-          />
+        <div className="w-12 h-12 flex-shrink-0 text-lg">
+          {currentUserDetails?.profileUrl ? (
+            <img
+              className="rounded-full shadow-sm  w-[100%] h-[100%]"
+              src={currentUserDetails?.profileUrl}
+              alt="user image"
+            />
+          ) : (
+            <DefaultProfilePic>
+              {currentUserDetails?.firstName[0] +
+                currentUserDetails?.lastName[0]}
+            </DefaultProfilePic>
+          )}
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
           <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>

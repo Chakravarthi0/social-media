@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { closePostModal } from "../../features";
-import { PrimaryButton, PrimaryOutlinedButton } from "../button";
+import { PrimaryButton, PrimaryOutlinedButton, DefaultProfilePic } from "../";
 
 const CreatePostModal = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const CreatePostModal = () => {
 
   const {
     auth: {
-      userDetails: { profileUrl },
+      userDetails: { profileUrl, firstName, lastName },
     },
     post: { showPostModal },
   } = useSelector((state) => state);
@@ -61,11 +61,17 @@ const CreatePostModal = () => {
           className="absolute top-1 right-1 text-2xl cursor-pointer"
           onClick={() => dispatch(closePostModal())}
         />
-        <div className="flex-none mt-3">
-          <img
-            src={profileUrl}
-            className="flex-none w-12 h-12 rounded-full hidden sm:block"
-          />
+        <div className="flex-none mt-3 h-12 w-12">
+          {profileUrl ? (
+            <img
+              src={profileUrl}
+              className="flex-none w-12 h-12 rounded-full hidden sm:block"
+            />
+          ) : (
+            <DefaultProfilePic>
+              {firstName?.[0] + lastName?.[0]}
+            </DefaultProfilePic>
+          )}
         </div>
         <form className="w-full px-4 relative">
           <textarea
