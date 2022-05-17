@@ -8,24 +8,19 @@ import { useTheme } from "./hooks";
 function App() {
   const { theme } = useTheme();
   const { pathname } = useLocation();
-  const routesWithSideBar = [
-    "/home",
-    "/explore",
-    "/bookmarks",
-    "/profile",
-    "/posts",
-  ];
+
+  const sidebarRestrictedRoutes = ["/","/signup"]
   return (
     <div
       className={
         theme === "dark" ? "dark text-white bg-gray-800" : "bg-gray-100"
       }
     >
-      <div className={routesWithSideBar.includes(pathname) ? "app-main" : ""}>
-        {routesWithSideBar.includes(pathname) && <CreatePostBtn />}
-        {routesWithSideBar.includes(pathname) && <SideBar />}
+      <div className={sidebarRestrictedRoutes.includes(pathname) ? "" : "app-main"}>
+        {!sidebarRestrictedRoutes.includes(pathname) && <CreatePostBtn />}
+        {!sidebarRestrictedRoutes.includes(pathname) && <SideBar />}
         <AppRoutes />
-        {routesWithSideBar.includes(pathname) && <FollowTab />}
+        {!sidebarRestrictedRoutes.includes(pathname) && <FollowTab />}
         <MobileBottomBar />
         <CreatePostModal />
       </div>
