@@ -1,5 +1,5 @@
 import authReducer, { signOut } from "./auth/authSlice";
-import userReducer, { uploadImg } from "./user/userSlice";
+import userReducer, { uploadImg, toggleTheme } from "./user/userSlice";
 import postReducer, { openPostModal, closePostModal } from "./post/postSlice";
 
 export { signInUser, signUpUser } from "./auth/helpers";
@@ -12,4 +12,5 @@ export {
   postReducer,
   openPostModal,
   closePostModal,
+  toggleTheme,
 };

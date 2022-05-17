@@ -13,9 +13,13 @@ import { HiOutlineMoon } from "react-icons/hi";
 import { BsPencil } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getUsers, openPostModal } from "../../features";
-import { useTheme } from "../../hooks";
-import { PrimaryButton, DefaultProfilePic, Loader } from "../../components";
+import { getUsers, openPostModal, toggleTheme } from "../../features";
+import {
+  PrimaryButton,
+  PrimaryOutlinedButton,
+  DefaultProfilePic,
+  Loader,
+} from "../../components";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -25,10 +29,9 @@ const SideBar = () => {
       userDetails: { username },
       token,
     },
-    user: { users, uploadingImg },
+    user: { users, uploadingImg, theme },
   } = useSelector((state) => state);
   const currentUserDetails = users?.find((user) => user.username === username);
-  const { toggleTheme, theme } = useTheme();
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getUsers());
@@ -118,17 +121,20 @@ const SideBar = () => {
           </NavLink>
         </li>
         <li className="hidden xl:block">
-          <PrimaryButton fullWidth={true} clickHandler={toggleTheme}>
+          <PrimaryOutlinedButton
+            fullWidth={true}
+            clickHandler={() => dispatch(toggleTheme())}
+          >
             Toggle theme
-          </PrimaryButton>
+          </PrimaryOutlinedButton>
         </li>
         {theme === "dark" ? (
           <li className="p-2 block xl:hidden text-3xl">
-            <MdOutlineWbSunny onClick={toggleTheme} />
+            <MdOutlineWbSunny onClick={() => dispatch(toggleTheme())} />
           </li>
         ) : (
           <li className="p-2 block xl:hidden text-3xl">
-            <HiOutlineMoon onClick={toggleTheme} />
+            <HiOutlineMoon onClick={() => dispatch(toggleTheme())} />
           </li>
         )}
         <li className="hidden xl:block ">

@@ -6,6 +6,7 @@ const initialState = {
   uploadingImg: false,
   error: "",
   users: [],
+  theme: localStorage.getItem("theme") || "light",
 };
 
 const userSlice = createSlice({
@@ -14,6 +15,15 @@ const userSlice = createSlice({
   reducers: {
     uploadImg: (state) => {
       state.uploadingImg = true;
+    },
+    toggleTheme: (state) => {
+      if (state.theme === "dark") {
+        state.theme = "light";
+        localStorage.setItem("theme", "light");
+      } else {
+        state.theme = "dark";
+        localStorage.setItem("theme", "dark");
+      }
     },
   },
   extraReducers: (builder) => {
@@ -90,4 +100,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { uploadImg } = userSlice.actions;
+export const { uploadImg, toggleTheme } = userSlice.actions;
