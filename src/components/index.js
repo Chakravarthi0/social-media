@@ -10,3 +10,4 @@ export { Comment } from "./comment/Comment";
 export { PasswordInput } from "./password-input/PasswordInput";
 export { Loader } from "./loader/Loader";
 export { LoaderOverlay } from "./loader-overlay/LoaderOverlay";
+export { UserListModal } from "./user-list-modal/UserListModal";
