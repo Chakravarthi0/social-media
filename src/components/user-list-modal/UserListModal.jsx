@@ -12,7 +12,7 @@ const UserListModal = ({ title, userList, setShowUserList }) => {
     <div class="absolute z-10 h-full w-full flex items-center justify-center">
       <div
         ref={uerListRef}
-        class="relative dark:bg-slate-700 px-10 py-5 rounded-3xl w-[300px] max-h-[400px] overflow-y-auto"
+        class="relative bg-slate-200 dark:bg-slate-700 px-10 py-5 rounded-3xl w-[300px] max-h-[400px] overflow-y-auto"
       >
         <MdClose
           className="absolute top-2 right-3 text-2xl cursor-pointer"
