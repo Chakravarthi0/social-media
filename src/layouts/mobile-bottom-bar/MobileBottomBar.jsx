@@ -9,12 +9,19 @@ import {
   MdOutlinePersonOutline,
   MdPerson,
 } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { HiOutlineMoon } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../../hooks";
 
 const MobileBottomBar = () => {
   const { theme, toggleTheme } = useTheme();
+
+  const {
+    auth: {
+      userDetails: { username },
+    },
+  } = useSelector((state) => state);
   return (
     <ul className="flex sm:hidden justify-between fixed bottom-0 right-0 left-0 p-2 bg-slate-200 dark:bg-black text-[28px]">
       <li>
@@ -46,7 +53,7 @@ const MobileBottomBar = () => {
       </li>
       <li>
         <NavLink
-          to={"/profile"}
+          to={`/profile/${username}`}
           className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
         >
           {({ isActive }) =>

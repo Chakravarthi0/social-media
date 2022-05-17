@@ -1,16 +1,15 @@
+import { useSelector } from "react-redux";
 import { PrimaryButton } from "../";
 
 const CreatePost = () => {
+  const { profileUrl } = useSelector((state) => state.auth.userDetails);
   const handlePost = (event) => {
     event.preventDefault();
   };
   return (
     <div className="px-5 py-3 border-lighter flex">
       <div className="flex-none mt-3">
-        <img
-          src="https://randomuser.me/api/portraits/men/11.jpg"
-          className="flex-none w-12 h-12 rounded-full"
-        />
+        <img src={profileUrl} className="flex-none w-12 h-12 rounded-full" />
       </div>
       <form className="w-full px-4 relative">
         <textarea

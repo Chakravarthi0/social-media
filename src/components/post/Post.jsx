@@ -1,31 +1,37 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { BsPencil, BsTrash } from "react-icons/bs";
-import { usePostModal } from "../../hooks";
+import { useDispatch } from "react-redux";
+import { openPostModal } from "../../features";
+import { useDetectClick } from "../../hooks";
 
 const Post = () => {
-  const { toggleShowPostModal } = usePostModal();
   const [showPostOptions, setShowPostOptions] = useState(false);
+  const optionsModalRef = useRef(null);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const toggleShowOptions = () => {
     setShowPostOptions((prev) => !prev);
   };
+  useDetectClick(optionsModalRef, setShowPostOptions);
   return (
     <div className="relative flex gap-x-5 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700">
       <div
         className="absolute top-0 right-0 cursor-pointer text-2xl"
-        onClick={toggleShowOptions}
+        onClick={() => toggleShowOptions()}
       >
         <MdOutlineMoreHoriz />
       </div>
       {showPostOptions && (
-        <div className="absolute top-4 right-0 p-2 rounded-lg cursor-pointer bg-slate-200 dark:bg-black">
+        <div
+          ref={optionsModalRef}
+          className="absolute top-4 right-0 p-2 rounded-lg cursor-pointer bg-slate-200 dark:bg-black"
+        >
           <div
             className="flex gap-2 justify-center items-center hover:text-blue-500"
             onClick={() => {
-              toggleShowOptions();
-              toggleShowPostModal();
+              dispatch(openPostModal());
             }}
           >
             <BsPencil />
@@ -33,10 +39,10 @@ const Post = () => {
           </div>
           <div
             className="flex gap-2 justify-center items-center mt-2 hover:text-red-600"
-            onClick={toggleShowOptions}
+            onClick={() => toggleShowOptions()}
           >
             <BsTrash />
-            <p>Edit Post</p>
+            <p>Delete Post</p>
           </div>
         </div>
       )}

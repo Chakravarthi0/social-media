@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   MdOutlineHome,
@@ -11,16 +12,28 @@ import {
 import { HiOutlineMoon } from "react-icons/hi";
 import { BsPencil } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
-import { usePostModal, useTheme } from "../../hooks";
+import { useDispatch } from "react-redux";
+import { getUsers, openPostModal } from "../../features";
+import { useTheme } from "../../hooks";
 import { PrimaryButton } from "../../components";
 
 const SideBar = () => {
-  const { firstName, lastName, username } = useSelector(
-    (state) => state.auth.userDetails
-  );
+  const dispatch = useDispatch();
+
+  const {
+    auth: {
+      userDetails: { username },
+      token,
+    },
+    user: { users },
+  } = useSelector((state) => state);
+  const currentUserDetails = users?.find((user) => user.username === username);
   const { toggleTheme, theme } = useTheme();
-  const { toggleShowPostModal } = usePostModal();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [token, dispatch]);
   return (
     <div className="hidden sm:flex flex-col justify-between sticky h-screen top-0 py-3">
       <ul className="p-4 flex flex-col gap-y-5 bg-slate-100 rounded dark:bg-slate-800">
@@ -122,9 +135,8 @@ const SideBar = () => {
         <li className="hidden xl:block ">
           <PrimaryButton
             fullWidth={true}
-            clickHandler={(event) => {
-              event.preventDefault();
-              toggleShowPostModal();
+            clickHandler={() => {
+              dispatch(openPostModal());
             }}
           >
             Create post
@@ -133,7 +145,7 @@ const SideBar = () => {
         <li>
           <div
             className="flex justify-center items-center bg-blue-500 w-12 h-12 rounded-full text-2xl xl:hidden"
-            onClick={toggleShowPostModal}
+            onClick={() => dispatch(openPostModal())}
           >
             <BsPencil />
           </div>
@@ -141,18 +153,18 @@ const SideBar = () => {
       </ul>
       <div
         className="flex mb-3 p-4 cursor-pointer rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600"
-        onClick={() => navigate("/profile")}
+        onClick={() => navigate(`/profile/${currentUserDetails?.username}`)}
       >
         <div className="w-12 h-12 flex-shrink-0">
           <img
             className="rounded-full shadow-sm"
-            src="https://randomuser.me/api/portraits/men/11.jpg"
+            src={currentUserDetails?.profileUrl}
             alt="user image"
           />
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
-          <p>{`${firstName} ${lastName}`}</p>
-          <p className="text-slate-400">@{username}</p>
+          <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
+          <p className="text-slate-400">@{currentUserDetails?.username}</p>
         </div>
       </div>
     </div>

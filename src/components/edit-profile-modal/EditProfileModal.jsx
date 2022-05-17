@@ -1,7 +1,60 @@
+import { useRef, useState } from "react";
 import { FiCamera } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
 import { PrimaryButton, PrimaryOutlinedButton } from "../";
+import { useDetectClick } from "../../hooks";
+import { updateUser, uploadImg } from "../../features";
+import toast from "react-hot-toast";
 
-const EditProfileModal = ({ toggleEditProfile }) => {
+const EditProfileModal = ({ currentUser, setShowEditProfile }) => {
+  const dispatch = useDispatch();
+
+  const profileModalRef = useRef(null);
+
+  useDetectClick(profileModalRef, setShowEditProfile);
+
+  const { token, userDetails } = useSelector((state) => state.auth);
+
+  const cloudinaryUrl =
+    "https://api.cloudinary.com/v1_1/test-social-media/image/upload";
+  const [updatedValue, setUpdatedValue] = useState(userDetails);
+  const [imageUrl, setImageUrl] = useState("");
+
+  const updateUserDetails = async (e) => {
+    e.preventDefault();
+    if (imageUrl) {
+      dispatch(uploadImg());
+      const file = imageUrl;
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "social-media");
+      formData.append("folder", "social-media");
+
+      try {
+        const res = await fetch(cloudinaryUrl, {
+          method: "POST",
+          body: formData,
+        });
+
+        const { url } = await res.json();
+
+        dispatch(
+          updateUser({
+            token,
+            userDetails: { ...updatedValue, profileUrl: url },
+          })
+        );
+      } catch (err) {
+        toast.error("Something went wrong, please try again.");
+        console.error(err);
+      }
+      setImageUrl("");
+    } else {
+      dispatch(updateUser({ token, userDetails: updatedValue }));
+    }
+    setShowEditProfile(false);
+  };
+
   return (
     <div
       className={
@@ -9,8 +62,11 @@ const EditProfileModal = ({ toggleEditProfile }) => {
         (!true ? "hidden" : "")
       }
     >
-      <div className="bg-grey-lighter min-h-screen flex flex-col ">
-        <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+      <div
+        ref={profileModalRef}
+        className="bg-grey-lighter min-h-screen flex flex-col "
+      >
+        <div className="relative container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full dark:bg-slate-900">
             <h1 className="mb-8 text-2xl text-center dark:text-white">
               Edit Profile
@@ -18,23 +74,36 @@ const EditProfileModal = ({ toggleEditProfile }) => {
 
             <div className="relative w-24 h-24 m-auto">
               <img
-                className="rounded-full m-auto"
-                src="https://randomuser.me/api/portraits/men/11.jpg"
+                className="rounded-[50%] h-[100%] w-[100%] m-auto"
+                src={
+                  imageUrl
+                    ? URL.createObjectURL(imageUrl)
+                    : currentUser?.profileUrl
+                }
                 alt="user image"
               />
-              <div className="absolute right-0 bottom-0 flex justify-center items-center h-9 w-9 bg-black  text-white dark:bg-white dark:text-black rounded-full">
+              {/* <div className="absolute right-0 bottom-0 flex justify-center items-center h-9 w-9 bg-black  text-white dark:bg-white dark:text-black rounded-full">
                 <FiCamera className="text-xl cursor-pointer" />
-              </div>
+              </div> */}
+
+              <label className="absolute right-0 bottom-0 flex justify-center items-center h-9 w-9 bg-black  text-white dark:bg-white dark:text-black rounded-full">
+                <input
+                  className="hidden"
+                  type="file"
+                  onChange={(e) => setImageUrl(e.target.files[0])}
+                />
+                <FiCamera className="text-xl cursor-pointer" />
+              </label>
             </div>
 
             <div className="text-black dark:text-white my-4">
               <h4 className="text-xl">User Name</h4>
-              <h6>@johndoe</h6>
+              <h6>{`${currentUser?.firstName} ${currentUser?.lastName}`}</h6>
             </div>
 
             <div className="text-black dark:text-white my-4">
-              <h4 className="text-xl">Name</h4>
-              <h6>John Doe</h6>
+              <h4 className="text-xl">User Name</h4>
+              <h6>@{currentUser?.username}</h6>
             </div>
 
             <label>
@@ -43,7 +112,10 @@ const EditProfileModal = ({ toggleEditProfile }) => {
                 type="text"
                 className="block border border-grey-light w-full p-3 rounded mb-4"
                 name="bio"
-                placeholder="Bio"
+                value={updatedValue.bio}
+                onChange={(e) =>
+                  setUpdatedValue((prev) => ({ ...prev, bio: e.target.value }))
+                }
               />
             </label>
 
@@ -53,15 +125,23 @@ const EditProfileModal = ({ toggleEditProfile }) => {
                 type="text"
                 className="block border border-grey-light w-full p-3 rounded mb-4"
                 name="website"
-                placeholder="Website"
+                value={updatedValue.website}
+                onChange={(e) =>
+                  setUpdatedValue((prev) => ({
+                    ...prev,
+                    website: e.target.value,
+                  }))
+                }
               />
             </label>
 
             <div className="flex justify-between gap-6 mt-5">
-              <PrimaryOutlinedButton clickHandler={toggleEditProfile}>
+              <PrimaryOutlinedButton
+                clickHandler={() => setShowEditProfile(false)}
+              >
                 Cancel
               </PrimaryOutlinedButton>
-              <PrimaryButton clickHandler={toggleEditProfile}>
+              <PrimaryButton clickHandler={updateUserDetails}>
                 Update
               </PrimaryButton>
             </div>
