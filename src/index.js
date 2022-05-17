@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import store from "./app/store";
 import App from "./App";
 import { makeServer } from "./server";
-import { ThemeProvider, PostModalProvider } from "./context";
+import { ThemeProvider } from "./context";
 import "./index.css";
 
 // Call make Server
@@ -16,11 +16,9 @@ ReactDOM.render(
   <Router>
   <Toaster position="top-center" />
     <ThemeProvider>
-      <PostModalProvider>
         <Provider store={store}>
           <App />
         </Provider>
-      </PostModalProvider>
     </ThemeProvider>
   </Router>,
   document.getElementById("root")
