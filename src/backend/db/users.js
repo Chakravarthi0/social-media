@@ -30,7 +30,7 @@ export const users = [
     followers: [],
     following: [],
     bookmarks: [],
-    profileUrl: "https://randomuser.me/api/portraits/women/11.jpg",
+    profileUrl: "https://randomuser.me/api/portraits/women/10.jpg",
     bio: "I am Jane Doe",
     website: "https://google.com/",
     createdAt: formatDate(),
