@@ -1,40 +1,71 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { closePostModal } from "../../features";
+import {
+  closePostModal,
+  createPost,
+  editPost,
+  setEditingPost,
+} from "../../features";
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
   DefaultProfilePic,
   Loader,
 } from "../";
+import toast from "react-hot-toast";
 
 const CreatePostModal = () => {
   const dispatch = useDispatch();
+
+  const {
+    auth: {
+      userDetails: { profileUrl, firstName, lastName },
+      token,
+    },
+    user: { uploadingImg },
+    post: { showPostModal, editingPost },
+  } = useSelector((state) => state);
+
+  const [postModalInput, setPostModalInput] = useState("");
+
   const handlePost = (event) => {
     event.preventDefault();
+    if (postModalInput?.trim().length > 0) {
+      dispatch(createPost({ postData: { content: postModalInput }, token }));
+      dispatch(closePostModal());
+      setPostModalInput("");
+    } else {
+      toast.error("Post cannot be empty");
+    }
+  };
+
+  const handleEdit = (event) => {
+    event.preventDefault();
     dispatch(closePostModal());
+    dispatch(
+      editPost({
+        postData: { content: postModalInput },
+        token,
+        postId: editingPost?._id,
+      })
+    );
+    dispatch(setEditingPost({}));
   };
 
   const modalBoxRef = useRef(null);
 
   const textAreaRef = useRef(null);
 
-  const {
-    auth: {
-      userDetails: { profileUrl, firstName, lastName },
-    },
-    user: { uploadingImg },
-    post: { showPostModal },
-  } = useSelector((state) => state);
-
   const focusHandler = () => {
     textAreaRef.current && textAreaRef.current.focus();
   };
-
   useEffect(() => {
     focusHandler();
   });
+  useEffect(() => {
+    setPostModalInput(editingPost?.content);
+  }, [editingPost]);
 
   useEffect(() => {
     const checkOusideClick = (e) => {
@@ -86,12 +117,24 @@ const CreatePostModal = () => {
             ref={textAreaRef}
             placeholder="Write something interesting"
             className="resize-none mt-3 pb-3 w-full h-28 bg-slate-200 focus:outline-none rounded-xl p-2 dark:bg-slate-700"
+            value={postModalInput}
+            onChange={(e) => setPostModalInput(e.target.value)}
           />
           <div className="flex gap-5 justify-end mt-2">
-            <PrimaryOutlinedButton clickHandler={handlePost}>
+            <PrimaryOutlinedButton
+              clickHandler={(e) => {
+                e.preventDefault();
+                dispatch(closePostModal());
+                dispatch(setEditingPost({}));
+              }}
+            >
               Cancel
             </PrimaryOutlinedButton>
-            <PrimaryButton clickHandler={handlePost}>Post</PrimaryButton>
+            {editingPost?.content ? (
+              <PrimaryButton clickHandler={handleEdit}>Update</PrimaryButton>
+            ) : (
+              <PrimaryButton clickHandler={handlePost}>Post</PrimaryButton>
+            )}
           </div>
         </form>
       </div>

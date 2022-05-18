@@ -3,13 +3,13 @@ import { MdClose } from "react-icons/md";
 import { HorizontalProfile } from "../";
 import { useDetectClick } from "../../hooks";
 
-const UserListModal = ({ title, userList, setShowUserList }) => {
+const UserListModal = ({ title, userList, setShowUserList, noUserMsg }) => {
   const uerListRef = useRef(null);
 
   useDetectClick(uerListRef, setShowUserList);
 
   return (
-    <div class="absolute z-10 h-full w-full flex items-center justify-center">
+    <div class="absolute z-10 w-full flex items-center justify-center h-[100vh] ">
       <div
         ref={uerListRef}
         class="relative bg-slate-200 dark:bg-slate-700 px-10 py-5 rounded-3xl w-[300px] max-h-[400px] overflow-y-auto"
@@ -31,10 +31,8 @@ const UserListModal = ({ title, userList, setShowUserList }) => {
                 followers={user.followers}
               />
             ))
-          ) : title === "Following" ? (
-            <p className="text-center">Not following anyone</p>
           ) : (
-            <p className="text-center">No followers</p>
+            <p className="text-center">{noUserMsg}</p>
           )}
         </div>
       </div>
