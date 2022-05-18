@@ -13,7 +13,12 @@ import { HiOutlineMoon } from "react-icons/hi";
 import { BsPencil } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getUsers, openPostModal, toggleTheme } from "../../features";
+import {
+  getUsers,
+  openPostModal,
+  toggleTheme,
+  getAllPosts,
+} from "../../features";
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
@@ -35,6 +40,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getUsers());
+    dispatch(getAllPosts());
   }, [token, dispatch]);
   return (
     <div className="hidden sm:flex flex-col justify-between sticky h-screen top-0 py-3">

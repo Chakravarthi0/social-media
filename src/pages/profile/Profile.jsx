@@ -19,6 +19,7 @@ const Profile = () => {
   const {
     user: { users, uploadingImg },
     auth: { token, userDetails: authUserDetails },
+    post: { posts },
   } = useSelector((state) => state);
   const currentUserDetails = users?.find((user) => user.username === username);
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -29,6 +30,10 @@ const Profile = () => {
     setshowFollowing(false);
     setShowFollowers(false);
   }, []);
+
+  const postsByAuthUser = posts?.filter(
+    (post) => post.username === authUserDetails?.username
+  );
 
   return (
     <div className="relative">
@@ -123,7 +128,7 @@ const Profile = () => {
 
         <div className="flex gap-5 mt-5">
           <div>
-            <p>1k</p>
+            <p>{postsByAuthUser?.length}</p>
             <p>Posts</p>
           </div>
           <div
@@ -144,7 +149,9 @@ const Profile = () => {
       </div>
       <div className="mt-20">
         <h1 className="text-2xl">Recent posts</h1>
-        <Post />
+        {postsByAuthUser?.map((post) => (
+          <Post postDetails={post} key={post?._id} />
+        ))}
       </div>
     </div>
   );
