@@ -6,7 +6,7 @@ const deletePost = createAsyncThunk(
   "post/deletePost",
   async ({ postId, token }) => {
     try {
-      const { data } = await axios.delete(`api/posts/${postId}`, {
+      const { data } = await axios.delete(`/api/posts/${postId}`, {
         headers: { authorization: token },
       });
       toast.success("Post deleted successfully");
