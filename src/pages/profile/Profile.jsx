@@ -31,8 +31,8 @@ const Profile = () => {
     setShowFollowers(false);
   }, []);
 
-  const postsByAuthUser = posts?.filter(
-    (post) => post.username === authUserDetails?.username
+  const postsByCurrentUser = posts?.filter(
+    (post) => post.username === currentUserDetails?.username
   );
 
   return (
@@ -128,7 +128,7 @@ const Profile = () => {
 
         <div className="flex gap-5 mt-5">
           <div>
-            <p>{postsByAuthUser?.length}</p>
+            <p>{postsByCurrentUser?.length}</p>
             <p>Posts</p>
           </div>
           <div
@@ -149,7 +149,7 @@ const Profile = () => {
       </div>
       <div className="mt-20">
         <h1 className="text-2xl">Recent posts</h1>
-        {postsByAuthUser?.map((post) => (
+        {postsByCurrentUser?.map((post) => (
           <Post postDetails={post} key={post?._id} />
         ))}
       </div>
