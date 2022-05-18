@@ -60,7 +60,7 @@ export const users = [
     followers: [],
     following: [],
     bookmarks: [],
-    profileUrl: "https://randomuser.me/api/portraits/women/1.jpg",
+    profileUrl: "https://randomuser.me/api/portraits/women/3.jpg",
     bio: "I am Miles Tone",
     website: "https://google.com/",
     createdAt: formatDate(),
