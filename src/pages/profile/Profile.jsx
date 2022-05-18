@@ -42,6 +42,7 @@ const Profile = () => {
           title={"Following"}
           userList={currentUserDetails?.following}
           setShowUserList={setshowFollowing}
+          noUserMsg={"No Following"}
         />
       )}
 
@@ -50,6 +51,7 @@ const Profile = () => {
           title={"Followers"}
           userList={currentUserDetails?.followers}
           setShowUserList={setShowFollowers}
+          noUserMsg={"No Followers"}
         />
       )}
 

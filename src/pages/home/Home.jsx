@@ -101,7 +101,7 @@ const Home = () => {
         )}
       </div>
       {filteredPosts.map((post) => (
-        <Post postDetails={post} />
+        <Post postDetails={post} key={post?._id} />
       ))}
     </div>
   );
