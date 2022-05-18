@@ -1,7 +1,8 @@
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Comment, DefaultProfilePic } from "../../components";
+import { Comment, DefaultProfilePic, UserListModal } from "../../components";
 import {
   addLike,
   addBookmark,
@@ -21,6 +22,7 @@ const SinglePost = () => {
     post: { posts },
     bookmark: { bookmarks },
   } = useSelector((state) => state);
+  const [showLikedUsers, setShowLikedUsers] = useState(false);
   const currentPost = posts?.find((post) => post.id === params?.postId);
 
   const getUserByUserName = (username) =>
@@ -33,10 +35,17 @@ const SinglePost = () => {
     );
     toast.success("Link copied to clipboard");
   };
-
   return (
-    <div>
+    <div className="relative">
       <h1 className="text-2xl pt-7 mb-4 pl-3">Post</h1>
+
+      {showLikedUsers && (
+        <UserListModal
+          userList={currentPost?.likes?.likedBy}
+          setShowUserList={setShowLikedUsers}
+          noUserMsg={"No likes"}
+        />
+      )}
 
       <div className="relative my-3 rounded-xl p-5">
         <div>
@@ -65,8 +74,10 @@ const SinglePost = () => {
 
           <div className="flex items-center gap-4 my-4 p-2 border-y-2 border-slate-400 ">
             <span>
-              <span className="font-bold">{currentPost?.likes.likeCount}</span>
-              Likes
+              <span
+                className="font-bold cursor-pointer"
+                onClick={() => setShowLikedUsers(true)}
+              >{`${currentPost?.likes.likeCount} Likes`}</span>
             </span>
             <span>
               <span className="font-bold">2</span> Comments
