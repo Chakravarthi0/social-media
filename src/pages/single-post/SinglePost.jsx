@@ -21,7 +21,7 @@ const SinglePost = () => {
     post: { posts },
     bookmark: { bookmarks },
   } = useSelector((state) => state);
-  const currentPost = posts?.find((post) => post.id === params.postId);
+  const currentPost = posts?.find((post) => post.id === params?.postId);
 
   const getUserByUserName = (username) =>
     users.filter((user) => user.username === username)[0];
@@ -29,7 +29,7 @@ const SinglePost = () => {
 
   const copyPostUrlTOClipboard = async () => {
     await navigator.clipboard.writeText(
-      `https://deploy-preview-4--sweet-cucurucho-5e95a3.app/posts/${postId}`
+      `https://deploy-preview-4--sweet-cucurucho-5e95a3.app/posts/${params?.postId}`
     );
     toast.success("Link copied to clipboard");
   };
