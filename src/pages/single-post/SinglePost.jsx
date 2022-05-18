@@ -29,7 +29,7 @@ const SinglePost = () => {
 
   const copyPostUrlTOClipboard = async () => {
     await navigator.clipboard.writeText(
-      `https://deploy-preview-4--sweet-cucurucho-5e95a3.app/posts/${params?.postId}`
+      `https://deploy-preview-4--sweet-cucurucho-5e95a3.netlify.app/posts/${params?.postId}`
     );
     toast.success("Link copied to clipboard");
   };
