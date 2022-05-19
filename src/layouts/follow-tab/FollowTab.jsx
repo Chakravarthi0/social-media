@@ -41,6 +41,7 @@ const FollowTab = () => {
                   userId={user._id}
                   followers={user.followers}
                   showFollowBtn={true}
+                  key={user._id}
                 />
               );
             })

@@ -11,7 +11,7 @@ const Explore = () => {
           <Loader />
         </div>
       ) : (
-        posts.map((post) => <Post postDetails={post} />)
+        posts.map((post) => <Post postDetails={post} key={post._id} />)
       )}
     </div>
   );
