@@ -114,7 +114,7 @@ const SinglePost = () => {
               >{`${currentPost?.likes.likeCount} Likes`}</span>
             </span>
             <span>
-              <span>2 Comments</span>
+              <span>{currentPost?.comments?.length} Comments</span>
             </span>
           </div>
 
@@ -142,11 +142,6 @@ const SinglePost = () => {
                 </button>
               )}
               <p>{currentPost?.likes?.likeCount}</p>
-            </div>
-            <div className="flex justify-center gap-1">
-              <button className="material-icons cursor-default">
-                chat_bubble_outline
-              </button>
             </div>
 
             {bookmarks?.find((id) => id === currentPost._id) ? (

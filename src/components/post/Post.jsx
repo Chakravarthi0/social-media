@@ -182,7 +182,7 @@ const Post = ({ postDetails }) => {
             >
               chat_bubble_outline
             </button>
-            <p>30</p>
+            <p>{postDetails?.comments.length}</p>
           </div>
           {bookmarks?.find((id) => id === postDetails._id) ? (
             <button
