@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { signUpUser } from "../../features";
-import { PrimaryButton, PasswordInput, LoaderOverlay } from "../";
+import { PrimaryButton, PasswordInput, LoaderOverlay, Logo } from "../";
 
 const SignUpCard = () => {
   const dispatch = useDispatch();
@@ -98,7 +98,8 @@ const SignUpCard = () => {
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       {authLoading && <LoaderOverlay />}
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-        <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full dark:bg-slate-900">
+        <Logo fontSize={"text-5xl"} />
+        <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full dark:bg-slate-900 mt-7">
           <h1 className="mb-8 text-3xl text-center dark:text-white">Sign up</h1>
           <label className="dark:text-white">First Name</label>
           <input

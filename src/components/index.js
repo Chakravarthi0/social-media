@@ -12,3 +12,4 @@ export { Loader } from "./loader/Loader";
 export { LoaderOverlay } from "./loader-overlay/LoaderOverlay";
 export { UserListModal } from "./user-list-modal/UserListModal";
 export { ProfileImage } from "./profileImage/ProfileImage";
+export { Logo } from "./logo/Logo";
