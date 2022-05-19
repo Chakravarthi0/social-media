@@ -4,7 +4,7 @@ import { BsPencil, BsTrash } from "react-icons/bs";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { DefaultProfilePic, PrimaryButton, PrimaryOutlinedButton } from "../";
 import { useDetectClick } from "../../hooks";
-import { deleteComment, editComment, editPost } from "../../features";
+import { deleteComment, editComment } from "../../features";
 import toast from "react-hot-toast";
 
 const Comment = ({ commentDetails, postId }) => {
@@ -100,11 +100,14 @@ const Comment = ({ commentDetails, postId }) => {
               <img
                 className="rounded-full shadow-sm"
                 src={currentUserDetails?.profileUrl}
-                alt="user image"
+                alt={
+                  currentUserDetails?.firstName[0] +
+                  currentUserDetails?.lastName[0]
+                }
               />
             ) : (
               <DefaultProfilePic>
-                {currentUserDetails?.firstName[0]}{" "}
+                {currentUserDetails?.firstName[0]}
                 {currentUserDetails?.lastName[0]}
               </DefaultProfilePic>
             )}

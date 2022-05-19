@@ -14,8 +14,6 @@ import {
   removeLike,
   removeBookmark,
   addComment,
-  editComment,
-  deleteComment,
 } from "../../features";
 
 const SinglePost = () => {
@@ -81,7 +79,10 @@ const SinglePost = () => {
                 <img
                   className="rounded-full shadow-sm"
                   src={currentUserDetails?.profileUrl}
-                  alt="user image"
+                  alt={
+                    currentUserDetails?.firstName[0] +
+                    currentUserDetails?.lastName[0]
+                  }
                 />
               ) : (
                 <DefaultProfilePic>
@@ -178,7 +179,10 @@ const SinglePost = () => {
                 <img
                   className="rounded-full shadow-sm"
                   src={authProfileUrl}
-                  alt="user image"
+                  alt={
+                    currentUserDetails?.firstName[0] +
+                    currentUserDetails?.lastName[0]
+                  }
                 />
               ) : (
                 <DefaultProfilePic>

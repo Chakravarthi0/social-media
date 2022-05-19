@@ -173,7 +173,10 @@ const SideBar = () => {
             <img
               className="rounded-full shadow-sm  w-[100%] h-[100%]"
               src={currentUserDetails?.profileUrl}
-              alt="user image"
+              alt={
+                currentUserDetails?.firstName[0] +
+                currentUserDetails?.lastName[0]
+              }
             />
           ) : (
             <DefaultProfilePic>

@@ -18,7 +18,6 @@ const FollowTab = () => {
       user.username !== authUserName
   );
 
-  console.log(searchInput, filteredUsers);
   return (
     <div className="hidden lg:block dark:bg-slate-800 sticky h-screen top-0 pt-5">
       <input
@@ -33,19 +32,17 @@ const FollowTab = () => {
         <p className="text-xl text-center">Who to follow</p>
         {filteredUsers?.length > 0 ? (
           filteredUsers?.map((user) => {
-            if (user.username !== authUserName) {
-              return (
-                <HorizontalProfile
-                  firstName={user.firstName}
-                  lastName={user.lastName}
-                  username={user.username}
-                  userProfileUrl={user.profileUrl}
-                  userId={user._id}
-                  followers={user.followers}
-                  showFollowBtn={true}
-                />
-              );
-            }
+            return (
+              <HorizontalProfile
+                firstName={user.firstName}
+                lastName={user.lastName}
+                username={user.username}
+                userProfileUrl={user.profileUrl}
+                userId={user._id}
+                followers={user.followers}
+                showFollowBtn={true}
+              />
+            );
           })
         ) : (
           <h1 className="my-5 text-xl text-center">No user found</h1>

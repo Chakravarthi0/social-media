@@ -115,7 +115,9 @@ const Post = ({ postDetails }) => {
           <img
             className="rounded-full shadow-sm"
             src={currentUserDetails?.profileUrl}
-            alt="user image"
+            alt={
+              currentUserDetails?.firstName[0] + currentUserDetails?.lastName[0]
+            }
           />
         ) : (
           <DefaultProfilePic>

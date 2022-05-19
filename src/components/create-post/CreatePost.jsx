@@ -30,7 +30,11 @@ const CreatePost = () => {
         {uploadingImg ? (
           <Loader />
         ) : profileUrl ? (
-          <img src={profileUrl} className="flex-none w-12 h-12 rounded-full" />
+          <img
+            src={profileUrl}
+            className="flex-none w-12 h-12 rounded-full"
+            alt={firstName[0] + lastName[0]}
+          />
         ) : (
           <DefaultProfilePic>{firstName[0] + lastName[0]}</DefaultProfilePic>
         )}

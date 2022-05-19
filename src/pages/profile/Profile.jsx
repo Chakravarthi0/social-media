@@ -69,7 +69,10 @@ const Profile = () => {
             <img
               className="rounded-full m-auto w-[100%] h-[100%]"
               src={currentUserDetails?.profileUrl}
-              alt="user image"
+              alt={
+                currentUserDetails?.firstName[0] +
+                currentUserDetails?.lastName[0]
+              }
             />
           ) : (
             <DefaultProfilePic>
@@ -122,6 +125,7 @@ const Profile = () => {
           <a
             href={currentUserDetails?.website}
             target="_blank"
+            rel="noreferrer"
             className="text-blue-400"
           >
             {currentUserDetails?.website}

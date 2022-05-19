@@ -105,6 +105,7 @@ const CreatePostModal = () => {
             <img
               src={profileUrl}
               className="flex-none w-12 h-12 rounded-full hidden sm:block"
+              alt={firstName?.[0] + lastName?.[0]}
             />
           ) : (
             <DefaultProfilePic>
