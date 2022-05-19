@@ -15,6 +15,7 @@ import {
   removeBookmark,
   addComment,
 } from "../../features";
+import { formatDate } from "../../utils";
 
 const SinglePost = () => {
   const params = useParams();
@@ -99,7 +100,9 @@ const SinglePost = () => {
                 </p>
               </div>
               <div className="my-4">{currentPost?.content}</div>
-              <p className="text-slate-400">{currentPost?.createdAt}</p>
+              <p className="text-slate-400">
+                {formatDate(currentPost?.createdAt)}
+              </p>
             </div>
           </div>
 

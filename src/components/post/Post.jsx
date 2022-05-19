@@ -16,6 +16,7 @@ import {
 } from "../../features";
 import { useDetectClick } from "../../hooks";
 import { DefaultProfilePic } from "../";
+import { formatDate } from "../../utils";
 import toast from "react-hot-toast";
 
 const Post = ({ postDetails }) => {
@@ -136,7 +137,9 @@ const Post = ({ postDetails }) => {
         >
           {content}
         </div>
-        <p className="text-slate-400">{postDetails?.createdAt}</p>
+        <p className="text-slate-400 mt-2">
+          {formatDate(postDetails?.createdAt)}
+        </p>
         <div className="mt-5 flex justify-between">
           <div className="flex justify-center gap-1">
             {postDetails?.likes?.likedBy.find(
