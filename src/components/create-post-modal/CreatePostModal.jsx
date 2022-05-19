@@ -19,10 +19,7 @@ const CreatePostModal = () => {
   const dispatch = useDispatch();
 
   const {
-    auth: {
-      userDetails: { profileUrl, firstName, lastName },
-      token,
-    },
+    auth: { userDetails: authUserDetails, token },
     user: { uploadingImg },
     post: { showPostModal, editingPost },
   } = useSelector((state) => state);
@@ -103,9 +100,9 @@ const CreatePostModal = () => {
             <Loader />
           ) : (
             <ProfileImage
-              profileUrl={profileUrl}
-              firstName={firstName}
-              lastName={lastName}
+              profileUrl={authUserDetails?.profileUrl}
+              firstName={authUserDetails?.firstName}
+              lastName={authUserDetails?.lastName}
             />
           )}
         </div>

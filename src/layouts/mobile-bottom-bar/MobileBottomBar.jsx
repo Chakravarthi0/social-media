@@ -16,9 +16,7 @@ import { toggleTheme } from "../../features";
 
 const MobileBottomBar = () => {
   const {
-    auth: {
-      userDetails: { username },
-    },
+    auth: { userDetails: authUserDetails },
     user: { theme },
   } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -53,7 +51,7 @@ const MobileBottomBar = () => {
       </li>
       <li>
         <NavLink
-          to={`/profile/${username}`}
+          to={`/profile/${authUserDetails?.username}`}
           className="flex items-center p-2 font-normal text-slate-900 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
         >
           {({ isActive }) =>
