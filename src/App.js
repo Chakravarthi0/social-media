@@ -13,7 +13,8 @@ function App() {
   return (
     <div
       className={
-        theme === "dark" ? "dark text-white bg-gray-800" : "bg-gray-100"
+        "min-h-[100vh] " +
+        (theme === "dark" ? "dark text-white bg-gray-800" : "bg-gray-100")
       }
     >
       <div
