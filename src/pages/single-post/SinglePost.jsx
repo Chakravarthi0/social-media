@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Comment,
   ProfileImage,
@@ -24,16 +24,7 @@ const SinglePost = () => {
   const dispatch = useDispatch();
   const {
     user: { users },
-    auth: {
-      // userDetails: {
-      //   username: authUserName,
-      //   profileUrl: authProfileUrl,
-      //   firstName: authUserFirstName,
-      //   lastName: authUserLastName,
-      // },
-      userDetails: authUserDetails,
-      token,
-    },
+    auth: { userDetails: authUserDetails, token },
     post: { posts, loading: isPostLoading },
     bookmark: { bookmarks },
   } = useSelector((state) => state);
@@ -60,6 +51,13 @@ const SinglePost = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const redirectToProfile = (event, target) => {
+    event.stopPropagation();
+    navigate(`/profile/${target}`);
+  };
+
   return (
     <div className="relative">
       <h1 className="text-2xl pt-7 mb-4 pl-3">Post</h1>
@@ -82,7 +80,12 @@ const SinglePost = () => {
           <div className="relative mt-3 rounded-xl p-5">
             <div>
               <div className="flex gap-x-3">
-                <div className="w-12 h-12 flex-shrink-0">
+                <div
+                  className="w-12 h-12 flex-shrink-0 cursor-pointer"
+                  onClick={(event) =>
+                    redirectToProfile(event, currentUserDetails?.username)
+                  }
+                >
                   <ProfileImage
                     profileUrl={currentUserDetails?.profileUrl}
                     firstName={currentUserDetails?.firstName}
@@ -90,7 +93,12 @@ const SinglePost = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <div className="flex flex-col mb-2">
+                  <div
+                    className="flex flex-col mb-2 cursor-pointer"
+                    onClick={(event) =>
+                      redirectToProfile(event, currentUserDetails?.username)
+                    }
+                  >
                     <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
                     <p className="text-slate-400">
                       @{currentUserDetails?.username}

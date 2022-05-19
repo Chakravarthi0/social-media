@@ -15,7 +15,6 @@ import {
   removeBookmark,
 } from "../../features";
 import { useDetectClick } from "../../hooks";
-import { DefaultProfilePic } from "../";
 import { formatDate } from "../../utils";
 import { copyPostUrlTOClipboard } from "../../utils";
 import { ProfileImage } from "../profileImage/ProfileImage";
@@ -35,11 +34,16 @@ const Post = ({ postDetails }) => {
   } = useSelector((state) => state);
   const currentUserDetails = users?.find((user) => user.username === username);
 
-  const navigate = useNavigate();
   const toggleShowOptions = () => {
     setShowPostOptions((prev) => !prev);
   };
   useDetectClick(optionsModalRef, setShowPostOptions);
+  const navigate = useNavigate();
+
+  const redirectToProfile = (event, target) => {
+    event.stopPropagation();
+    navigate(`/profile/${target}`);
+  };
 
   return (
     <div
@@ -116,7 +120,12 @@ const Post = ({ postDetails }) => {
           )}
         </div>
       )}
-      <div className="w-12 h-12 flex-shrink-0">
+      <div
+        className="w-12 h-12 flex-shrink-0"
+        onClick={(event) =>
+          redirectToProfile(event, currentUserDetails?.username)
+        }
+      >
         <ProfileImage
           profileUrl={currentUserDetails?.profileUrl}
           firstName={currentUserDetails?.firstName}
@@ -124,7 +133,12 @@ const Post = ({ postDetails }) => {
         />
       </div>
       <div className="w-[100%]">
-        <div className="flex flex-col mb-3">
+        <div
+          className="flex flex-col mb-3"
+          onClick={(event) =>
+            redirectToProfile(event, currentUserDetails?.username)
+          }
+        >
           <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
           <p className="text-slate-400">@{username}</p>
         </div>
