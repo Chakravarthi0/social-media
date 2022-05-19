@@ -132,7 +132,11 @@ const Comment = ({ commentDetails, postId }) => {
                 </PrimaryOutlinedButton>
               </div>
             ) : (
-              <div className="mt-2">{commentDetails?.content}</div>
+              <>
+                <div className="my-1">{commentDetails?.content}</div>
+
+                <p className="text-slate-400">{commentDetails?.createdAt}</p>
+              </>
             )}
           </div>
         </div>
