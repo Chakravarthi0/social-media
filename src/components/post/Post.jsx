@@ -47,10 +47,16 @@ const Post = ({ postDetails }) => {
   };
 
   return (
-    <div className="relative flex gap-x-3 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700">
+    <div
+      className="relative flex gap-x-3 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+      onClick={() => navigate(`/posts/${postId}`)}
+    >
       <div
         className="absolute top-0 right-5 cursor-pointer text-2xl"
-        onClick={() => toggleShowOptions()}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleShowOptions();
+        }}
       >
         <MdOutlineMoreHoriz />
       </div>
@@ -63,7 +69,8 @@ const Post = ({ postDetails }) => {
             <>
               <div
                 className="flex gap-2 justify-center items-center hover:text-blue-500"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   dispatch(setEditingPost(postDetails));
                   dispatch(openPostModal());
                 }}
@@ -73,7 +80,8 @@ const Post = ({ postDetails }) => {
               </div>
               <div
                 className="flex gap-2 justify-center items-center mt-2 hover:text-red-600"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   dispatch(deletePost({ postId: postDetails?._id, token }));
                   toggleShowOptions();
                 }}
@@ -87,7 +95,8 @@ const Post = ({ postDetails }) => {
             ) ? (
             <div
               className="flex gap-2 justify-center items-center mt-2 hover:text-red-600"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 dispatch(
                   unFollowUser({ idToUnFollow: currentUserDetails?._id, token })
                 );
@@ -99,7 +108,8 @@ const Post = ({ postDetails }) => {
           ) : (
             <div
               className="flex gap-2 justify-center items-center hover:text-blue-500"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 dispatch(
                   followUser({ idToFollow: currentUserDetails?._id, token })
                 );
@@ -131,12 +141,7 @@ const Post = ({ postDetails }) => {
           <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
           <p className="text-slate-400">@{username}</p>
         </div>
-        <div
-          className="cursor-pointer"
-          onClick={() => navigate(`/posts/${postId}`)}
-        >
-          {content}
-        </div>
+        <div>{content}</div>
         <p className="text-slate-400 mt-2">
           {formatDate(postDetails?.createdAt)}
         </p>
@@ -147,18 +152,20 @@ const Post = ({ postDetails }) => {
             ) ? (
               <button
                 className="material-icons text-red-500 cursor-pointer"
-                onClick={() =>
-                  dispatch(removeLike({ postId: postDetails?._id, token }))
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(removeLike({ postId: postDetails?._id, token }));
+                }}
               >
                 favorite
               </button>
             ) : (
               <button
                 className="material-icons hover:text-red-500 cursor-pointer"
-                onClick={() =>
-                  dispatch(addLike({ postId: postDetails?._id, token }))
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(addLike({ postId: postDetails?._id, token }));
+                }}
               >
                 favorite_border
               </button>
@@ -168,7 +175,10 @@ const Post = ({ postDetails }) => {
           <div className="flex justify-center gap-1">
             <button
               className="material-icons hover:text-blue-500 cursor-pointer"
-              onClick={() => navigate(`/posts/${postId}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/posts/${postId}`);
+              }}
             >
               chat_bubble_outline
             </button>
@@ -177,18 +187,20 @@ const Post = ({ postDetails }) => {
           {bookmarks?.find((id) => id === postDetails._id) ? (
             <button
               className="material-icons text-blue-500 cursor-pointer"
-              onClick={() =>
-                dispatch(removeBookmark({ token, postId: postDetails?._id }))
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(removeBookmark({ token, postId: postDetails?._id }));
+              }}
             >
               bookmark
             </button>
           ) : (
             <button
               className="material-icons hover:text-blue-500 cursor-pointer"
-              onClick={() =>
-                dispatch(addBookmark({ token, postId: postDetails?._id }))
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(addBookmark({ token, postId: postDetails?._id }));
+              }}
             >
               bookmark_border
             </button>
@@ -196,7 +208,10 @@ const Post = ({ postDetails }) => {
 
           <button
             className="material-icons hover:text-blue-500 cursor-pointer"
-            onClick={copyPostUrlTOClipboard}
+            onClick={(e) => {
+              e.stopPropagation();
+              copyPostUrlTOClipboard();
+            }}
           >
             share
           </button>
