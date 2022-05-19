@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   Comment,
-  DefaultProfilePic,
+  ProfileImage,
   Loader,
   PrimaryButton,
   UserListModal,
@@ -25,7 +25,13 @@ const SinglePost = () => {
   const {
     user: { users },
     auth: {
-      userDetails: { username: authUserName, profileUrl: authProfileUrl },
+      // userDetails: {
+      //   username: authUserName,
+      //   profileUrl: authProfileUrl,
+      //   firstName: authUserFirstName,
+      //   lastName: authUserLastName,
+      // },
+      userDetails: authUserDetails,
       token,
     },
     post: { posts, loading: isPostLoading },
@@ -77,21 +83,11 @@ const SinglePost = () => {
             <div>
               <div className="flex gap-x-3">
                 <div className="w-12 h-12 flex-shrink-0">
-                  {currentUserDetails?.profileUrl ? (
-                    <img
-                      className="rounded-full shadow-sm"
-                      src={currentUserDetails?.profileUrl}
-                      alt={
-                        currentUserDetails?.firstName[0] +
-                        currentUserDetails?.lastName[0]
-                      }
-                    />
-                  ) : (
-                    <DefaultProfilePic>
-                      {currentUserDetails?.firstName[0] +
-                        currentUserDetails?.lastName[0]}
-                    </DefaultProfilePic>
-                  )}
+                  <ProfileImage
+                    profileUrl={currentUserDetails?.profileUrl}
+                    firstName={currentUserDetails?.firstName}
+                    lastName={currentUserDetails?.lastName}
+                  />
                 </div>
                 <div className="flex flex-col">
                   <div className="flex flex-col mb-2">
@@ -122,7 +118,7 @@ const SinglePost = () => {
               <div className=" flex justify-between pb-2 border-b-2 border-slate-300 dark:border-slate-700 ">
                 <div className="flex justify-center gap-1">
                   {currentPost?.likes?.likedBy.find(
-                    (user) => user.username === authUserName
+                    (user) => user.username === authUserDetails?.username
                   ) ? (
                     <button
                       className="material-icons text-red-500 cursor-pointer"
@@ -178,21 +174,11 @@ const SinglePost = () => {
 
               <div className="flex justify-between items-center gap-x-6 py-3 border-b-2 border-slate-300 dark:border-slate-700">
                 <div className="w-10 h-10 flex-shrink-0">
-                  {currentUserDetails?.profileUrl ? (
-                    <img
-                      className="rounded-full shadow-sm"
-                      src={authProfileUrl}
-                      alt={
-                        currentUserDetails?.firstName[0] +
-                        currentUserDetails?.lastName[0]
-                      }
-                    />
-                  ) : (
-                    <DefaultProfilePic>
-                      {currentUserDetails?.firstName[0] +
-                        currentUserDetails?.lastName[0]}
-                    </DefaultProfilePic>
-                  )}
+                  <ProfileImage
+                    profileUrl={authUserDetails?.profileUrl}
+                    firstName={authUserDetails?.firstName}
+                    lastName={authUserDetails?.lastName}
+                  />
                 </div>
                 <input
                   type="text"

@@ -8,7 +8,7 @@ import {
   EditProfileModal,
   PrimaryButton,
   UserListModal,
-  DefaultProfilePic,
+  ProfileImage,
   Loader,
 } from "../../components";
 import { followUser, signOut, unFollowUser } from "../../features";
@@ -75,20 +75,12 @@ const Profile = () => {
             <div className="w-32 h-32 text-3xl flex justify-center items-center">
               {uploadingImg ? (
                 <Loader />
-              ) : currentUserDetails?.profileUrl ? (
-                <img
-                  className="rounded-full m-auto w-[100%] h-[100%]"
-                  src={currentUserDetails?.profileUrl}
-                  alt={
-                    currentUserDetails?.firstName[0] +
-                    currentUserDetails?.lastName[0]
-                  }
-                />
               ) : (
-                <DefaultProfilePic>
-                  {currentUserDetails?.firstName[0] +
-                    currentUserDetails?.lastName[0]}
-                </DefaultProfilePic>
+                <ProfileImage
+                  profileUrl={currentUserDetails?.profileUrl}
+                  firstName={currentUserDetails?.firstName}
+                  lastName={currentUserDetails?.lastName}
+                />
               )}
             </div>
             {authUserDetails?.username === currentUserDetails?.username && (

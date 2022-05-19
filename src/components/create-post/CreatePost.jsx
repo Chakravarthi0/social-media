@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
-import { PrimaryButton, DefaultProfilePic, Loader } from "../";
+import { PrimaryButton, ProfileImage, Loader } from "../";
 import { createPost } from "../../features";
 
 const CreatePost = () => {
@@ -29,14 +29,12 @@ const CreatePost = () => {
       <div className="flex-none mt-3 w-12 h-12 text-lg">
         {uploadingImg ? (
           <Loader />
-        ) : profileUrl ? (
-          <img
-            src={profileUrl}
-            className="flex-none w-12 h-12 rounded-full"
-            alt={firstName[0] + lastName[0]}
-          />
         ) : (
-          <DefaultProfilePic>{firstName[0] + lastName[0]}</DefaultProfilePic>
+          <ProfileImage
+            profileUrl={profileUrl}
+            firstName={firstName}
+            lastName={lastName}
+          />
         )}
       </div>
       <form className="w-full px-4 relative">

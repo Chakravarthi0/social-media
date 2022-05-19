@@ -18,6 +18,7 @@ import { useDetectClick } from "../../hooks";
 import { DefaultProfilePic } from "../";
 import { formatDate } from "../../utils";
 import { copyPostUrlTOClipboard } from "../../utils";
+import { ProfileImage } from "../profileImage/ProfileImage";
 
 const Post = ({ postDetails }) => {
   const { content, username, id: postId, likes } = postDetails;
@@ -116,19 +117,11 @@ const Post = ({ postDetails }) => {
         </div>
       )}
       <div className="w-12 h-12 flex-shrink-0">
-        {currentUserDetails?.profileUrl ? (
-          <img
-            className="rounded-full shadow-sm"
-            src={currentUserDetails?.profileUrl}
-            alt={
-              currentUserDetails?.firstName[0] + currentUserDetails?.lastName[0]
-            }
-          />
-        ) : (
-          <DefaultProfilePic>
-            {currentUserDetails?.firstName[0]} {currentUserDetails?.lastName[0]}
-          </DefaultProfilePic>
-        )}
+        <ProfileImage
+          profileUrl={currentUserDetails?.profileUrl}
+          firstName={currentUserDetails?.firstName}
+          lastName={currentUserDetails?.lastName}
+        />
       </div>
       <div className="w-[100%]">
         <div className="flex flex-col mb-3">

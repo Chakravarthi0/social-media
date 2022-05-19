@@ -22,7 +22,7 @@ import {
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
-  DefaultProfilePic,
+  ProfileImage,
   Loader,
 } from "../../components";
 
@@ -169,20 +169,12 @@ const SideBar = () => {
         <div className="w-12 h-12 flex-shrink-0 text-lg">
           {uploadingImg ? (
             <Loader />
-          ) : currentUserDetails?.profileUrl ? (
-            <img
-              className="rounded-full shadow-sm  w-[100%] h-[100%]"
-              src={currentUserDetails?.profileUrl}
-              alt={
-                currentUserDetails?.firstName[0] +
-                currentUserDetails?.lastName[0]
-              }
-            />
           ) : (
-            <DefaultProfilePic>
-              {(currentUserDetails?.firstName[0] || "N") +
-                (currentUserDetails?.lastName[0] || "A")}
-            </DefaultProfilePic>
+            <ProfileImage
+              profileUrl={currentUserDetails?.profileUrl}
+              firstName={currentUserDetails?.firstName}
+              lastName={currentUserDetails?.lastName}
+            />
           )}
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">

@@ -11,4 +11,4 @@ export { PasswordInput } from "./password-input/PasswordInput";
 export { Loader } from "./loader/Loader";
 export { LoaderOverlay } from "./loader-overlay/LoaderOverlay";
 export { UserListModal } from "./user-list-modal/UserListModal";
-export { DefaultProfilePic } from "./default-profile-pic/DefaultProfilePic";
+export { ProfileImage } from "./profileImage/ProfileImage";
