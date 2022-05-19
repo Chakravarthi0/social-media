@@ -15,7 +15,7 @@ import {
   removeBookmark,
   addComment,
 } from "../../features";
-import { formatDate } from "../../utils";
+import { formatDate, copyPostUrlTOClipboard } from "../../utils";
 
 const SinglePost = () => {
   const params = useParams();
@@ -36,13 +36,6 @@ const SinglePost = () => {
   const getUserByUserName = (username) =>
     users.filter((user) => user.username === username)[0];
   const currentUserDetails = getUserByUserName(currentPost?.username);
-
-  const copyPostUrlTOClipboard = async () => {
-    await navigator.clipboard.writeText(
-      `https://sweet-cucurucho-5e95a3.netlify.app/posts/${params?.postId}`
-    );
-    toast.success("Link copied to clipboard");
-  };
 
   const handleAddComment = () => {
     if (comment.trim().length > 1) {
@@ -165,7 +158,7 @@ const SinglePost = () => {
             )}
             <button
               className="material-icons hover:text-blue-500 cursor-pointer"
-              onClick={copyPostUrlTOClipboard}
+              onClick={() => copyPostUrlTOClipboard(params?.postId)}
             >
               share
             </button>

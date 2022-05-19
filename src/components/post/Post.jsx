@@ -17,7 +17,7 @@ import {
 import { useDetectClick } from "../../hooks";
 import { DefaultProfilePic } from "../";
 import { formatDate } from "../../utils";
-import toast from "react-hot-toast";
+import { copyPostUrlTOClipboard } from "../../utils";
 
 const Post = ({ postDetails }) => {
   const { content, username, id: postId, likes } = postDetails;
@@ -39,12 +39,6 @@ const Post = ({ postDetails }) => {
     setShowPostOptions((prev) => !prev);
   };
   useDetectClick(optionsModalRef, setShowPostOptions);
-  const copyPostUrlTOClipboard = async () => {
-    await navigator.clipboard.writeText(
-      `https://sweet-cucurucho-5e95a3.netlify.app/posts/${postId}`
-    );
-    toast.success("Link copied to clipboard");
-  };
 
   return (
     <div
@@ -210,7 +204,7 @@ const Post = ({ postDetails }) => {
             className="material-icons hover:text-blue-500 cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              copyPostUrlTOClipboard();
+              copyPostUrlTOClipboard(postId);
             }}
           >
             share
