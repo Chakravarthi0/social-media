@@ -62,6 +62,7 @@ const SignUpCard = () => {
     const errors = {};
     const passwordRegex =
       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const usernameRegex = /^[a-z0-9]+$/;
     if (!inputs.firstName) {
       errors.firstName = "Firstname is required";
     }
@@ -73,6 +74,10 @@ const SignUpCard = () => {
     }
     if (inputs.userName.length < 4) {
       errors.userName = "User name must be atleast 4 characters long";
+    }
+    if (!usernameRegex.test(inputs.userName)) {
+      errors.userName =
+        "User name must contain only lower case letter and numbers";
     }
     if (!inputs.password) {
       errors.password = "Password is required";
@@ -91,7 +96,7 @@ const SignUpCard = () => {
 
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
-          {authLoading && <LoaderOverlay />}
+      {authLoading && <LoaderOverlay />}
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full dark:bg-slate-900">
           <h1 className="mb-8 text-3xl text-center dark:text-white">Sign up</h1>
