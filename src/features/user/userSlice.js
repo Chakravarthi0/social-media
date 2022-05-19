@@ -6,7 +6,7 @@ const initialState = {
   uploadingImg: false,
   error: "",
   users: [],
-  theme: localStorage.getItem("theme") || "light",
+  theme: localStorage.getItem("theme") || "dark",
 };
 
 const userSlice = createSlice({
