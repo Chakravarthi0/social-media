@@ -180,14 +180,18 @@ const SideBar = () => {
             />
           ) : (
             <DefaultProfilePic>
-              {currentUserDetails?.firstName[0] +
-                currentUserDetails?.lastName[0]}
+              {(currentUserDetails?.firstName[0] || "N") +
+                (currentUserDetails?.lastName[0] || "A")}
             </DefaultProfilePic>
           )}
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
-          <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
-          <p className="text-slate-400">@{currentUserDetails?.username}</p>
+          <p>{`${currentUserDetails?.firstName || "N"} ${
+            currentUserDetails?.lastName || "A"
+          }`}</p>
+          <p className="text-slate-400">
+            @{currentUserDetails?.username || "na"}
+          </p>
         </div>
       </div>
     </div>

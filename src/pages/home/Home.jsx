@@ -3,12 +3,12 @@ import { GiSettingsKnobs } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { FiTrendingUp } from "react-icons/fi";
 import { BsSortDown, BsSortUp } from "react-icons/bs";
-import { Post, CreatePost } from "../../components";
+import { Post, CreatePost, Loader } from "../../components";
 import { useDetectClick } from "../../hooks";
 
 const Home = () => {
   const {
-    post: { posts },
+    post: { posts, loading: isPostLoading },
     auth: { userDetails: authUser },
     user: { users },
   } = useSelector((state) => state);
@@ -56,53 +56,61 @@ const Home = () => {
       <div className="hidden lg:block">
         <CreatePost />
       </div>
-      <div className="relative flex justify-between items-center pl-5 pr-1">
-        <h1 className="text-xl pt-7 mb-4">{sortState} posts</h1>
-        <GiSettingsKnobs
-          className="text-xl cursor-pointer"
-          onClick={toggleShowOptions}
-        />
-        {showSortOptions && (
-          <div
-            ref={sortOptionsRef}
-            className="absolute top-[50px] z-10 right-0 p-2 rounded-lg cursor-pointer bg-slate-200 dark:bg-black"
-          >
-            <div
-              className="flex gap-2 items-center hover:text-blue-500"
-              onClick={() => {
-                setSortState("Trending");
-                toggleShowOptions();
-              }}
-            >
-              <FiTrendingUp />
-              <p>Trending</p>
-            </div>
-            <div
-              className="flex gap-2 items-center mt-2 hover:text-blue-500"
-              onClick={() => {
-                setSortState("Latest");
-                toggleShowOptions();
-              }}
-            >
-              <BsSortDown />
-              <p>Latest</p>
-            </div>
-            <div
-              className="flex gap-2 items-center mt-2 hover:text-blue-500"
-              onClick={() => {
-                setSortState("Oldest");
-                toggleShowOptions();
-              }}
-            >
-              <BsSortUp />
-              <p>Oldest</p>
-            </div>
+      {isPostLoading ? (
+        <div className="flex justify-center items-center h-[70vh]">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className="relative flex justify-between items-center pl-5 pr-1">
+            <h1 className="text-xl pt-7 mb-4">{sortState} posts</h1>
+            <GiSettingsKnobs
+              className="text-xl cursor-pointer"
+              onClick={toggleShowOptions}
+            />
+            {showSortOptions && (
+              <div
+                ref={sortOptionsRef}
+                className="absolute top-[50px] z-10 right-0 p-2 rounded-lg cursor-pointer bg-slate-200 dark:bg-black"
+              >
+                <div
+                  className="flex gap-2 items-center hover:text-blue-500"
+                  onClick={() => {
+                    setSortState("Trending");
+                    toggleShowOptions();
+                  }}
+                >
+                  <FiTrendingUp />
+                  <p>Trending</p>
+                </div>
+                <div
+                  className="flex gap-2 items-center mt-2 hover:text-blue-500"
+                  onClick={() => {
+                    setSortState("Latest");
+                    toggleShowOptions();
+                  }}
+                >
+                  <BsSortDown />
+                  <p>Latest</p>
+                </div>
+                <div
+                  className="flex gap-2 items-center mt-2 hover:text-blue-500"
+                  onClick={() => {
+                    setSortState("Oldest");
+                    toggleShowOptions();
+                  }}
+                >
+                  <BsSortUp />
+                  <p>Oldest</p>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      {filteredPosts.map((post) => (
-        <Post postDetails={post} key={post?._id} />
-      ))}
+          {filteredPosts.map((post) => (
+            <Post postDetails={post} key={post?._id} />
+          ))}
+        </>
+      )}
     </div>
   );
 };

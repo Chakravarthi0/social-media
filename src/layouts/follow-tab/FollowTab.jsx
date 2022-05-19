@@ -7,7 +7,7 @@ const FollowTab = () => {
     auth: {
       userDetails: { username: authUserName },
     },
-    user: { users },
+    user: { users, loading: isUserLoading },
   } = useSelector((state) => state);
   const [searchInput, setSearchInput] = useState("");
 
@@ -30,23 +30,23 @@ const FollowTab = () => {
 
       <div className="bg-slate-100 mt-5 dark:bg-slate-700 rounded-xl pt-3 max-h-[400px] overflow-y-auto">
         <p className="text-xl text-center">Who to follow</p>
-        {filteredUsers?.length > 0 ? (
-          filteredUsers?.map((user) => {
-            return (
-              <HorizontalProfile
-                firstName={user.firstName}
-                lastName={user.lastName}
-                username={user.username}
-                userProfileUrl={user.profileUrl}
-                userId={user._id}
-                followers={user.followers}
-                showFollowBtn={true}
-              />
-            );
-          })
-        ) : (
-          <h1 className="my-5 text-xl text-center">No user found</h1>
-        )}
+        {filteredUsers?.length > 0
+          ? filteredUsers?.map((user) => {
+              return (
+                <HorizontalProfile
+                  firstName={user.firstName}
+                  lastName={user.lastName}
+                  username={user.username}
+                  userProfileUrl={user.profileUrl}
+                  userId={user._id}
+                  followers={user.followers}
+                  showFollowBtn={true}
+                />
+              );
+            })
+          : !isUserLoading && (
+              <h1 className="my-5 text-xl text-center">No user found</h1>
+            )}
       </div>
     </div>
   );
