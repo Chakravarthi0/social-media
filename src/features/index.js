@@ -16,6 +16,9 @@ export {
   deletePost,
   addLike,
   removeLike,
+  addComment,
+  editComment,
+  deleteComment,
 } from "./post/helpers";
 export {
   getAllBookmarks,

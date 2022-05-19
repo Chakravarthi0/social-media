@@ -4,3 +4,6 @@ export { deletePost } from "./deletePost";
 export { getAllPosts } from "./getAllPosts";
 export { addLike } from "./addLike";
 export { removeLike } from "./removeLike";
+export { addComment } from "./addComment";
+export { editComment } from "./editComment";
+export { deleteComment } from "./deleteComment";
