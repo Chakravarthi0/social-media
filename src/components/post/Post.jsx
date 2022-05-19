@@ -40,13 +40,13 @@ const Post = ({ postDetails }) => {
   useDetectClick(optionsModalRef, setShowPostOptions);
   const copyPostUrlTOClipboard = async () => {
     await navigator.clipboard.writeText(
-      `https://deploy-preview-4--sweet-cucurucho-5e95a3.netlify.app/posts/${postId}`
+      `https://sweet-cucurucho-5e95a3.netlify.app/posts/${postId}`
     );
     toast.success("Link copied to clipboard");
   };
 
   return (
-    <div className="relative flex gap-x-5 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700">
+    <div className="relative flex gap-x-3 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700">
       <div
         className="absolute top-0 right-5 cursor-pointer text-2xl"
         onClick={() => toggleShowOptions()}
@@ -124,7 +124,7 @@ const Post = ({ postDetails }) => {
         )}
       </div>
       <div className="w-[100%]">
-        <div className="flex gap-x-2">
+        <div className="flex flex-col mb-3">
           <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
           <p className="text-slate-400">@{username}</p>
         </div>

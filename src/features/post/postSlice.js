@@ -6,6 +6,9 @@ import {
   getAllPosts,
   addLike,
   removeLike,
+  addComment,
+  editComment,
+  deleteComment,
 } from "./helpers";
 
 const initialState = {
@@ -89,6 +92,42 @@ const postSlice = createSlice({
       state.posts = payload;
     });
     builder.addCase(removeLike.rejected, (state) => {
+      state.error = true;
+    });
+    builder.addCase(addComment.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(addComment.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.posts = payload;
+    });
+    builder.addCase(addComment.rejected, (state) => {
+      state.loading = false;
+      state.error = true;
+    });
+    builder.addCase(editComment.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(editComment.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.posts = payload;
+    });
+    builder.addCase(editComment.rejected, (state) => {
+      state.loading = false;
+      state.error = true;
+    });
+    builder.addCase(deleteComment.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(deleteComment.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.posts = payload;
+    });
+    builder.addCase(deleteComment.rejected, (state) => {
+      state.loading = false;
       state.error = true;
     });
   },
