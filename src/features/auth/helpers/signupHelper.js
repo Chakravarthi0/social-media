@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const signUpUser = createAsyncThunk("auth/signup", async (userData, {rejectWithValue}) => {
+const signUpUser = createAsyncThunk("auth/signup", async (userData) => {
   try {
     const { status, data } = await axios.post("/api/auth/signup", userData);
     if (status === 201) {
@@ -18,8 +18,8 @@ const signUpUser = createAsyncThunk("auth/signup", async (userData, {rejectWithV
     }
   } catch (err) {
     console.log(err);
-    toast.error(err.response.data.error[0]);
-    return rejectWithValue(err.response.data.error[0]);
+    toast.error(err.response.data.errors[0]);
+    return err.response.data.errors[0];
   }
 });
 

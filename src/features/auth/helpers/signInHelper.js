@@ -17,8 +17,8 @@ const signInUser = createAsyncThunk("auth/signin", async (userInput) => {
       return data;
     }
   } catch (err) {
-    toast.error(err.response.data.error[0]);
-    console.log(err)
+    toast.error(err.response.data.errors[0]);
+    console.log(err);
     return err.response.data.error[0];
   }
 });
