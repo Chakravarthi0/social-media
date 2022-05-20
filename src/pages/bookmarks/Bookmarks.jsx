@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Post } from "../../components";
+import { Post, Loader } from "../../components";
 import { getAllBookmarks } from "../../features";
 
 const Bookmarks = () => {
   const dispatch = useDispatch();
   const {
-    post: { posts },
+    post: { posts, loading: isPostLoading },
     bookmark: { bookmarks },
     auth: { token },
   } = useSelector((state) => state);
@@ -20,12 +20,17 @@ const Bookmarks = () => {
   return (
     <div>
       <h1 className="text-2xl pt-7 pl-5">Bookmarks</h1>
-      {bookmarkedPosts?.length < 1 && (
+      {isPostLoading ? (
+        <div className="flex justify-center items-center h-[70vh]">
+          <Loader />
+        </div>
+      ) : bookmarkedPosts?.length < 1 ? (
         <h2 className="text-xl text-center pt-7 pl-5">No bookmarks</h2>
+      ) : (
+        bookmarkedPosts.map((post) => (
+          <Post postDetails={post} key={post?._id} />
+        ))
       )}
-      {bookmarkedPosts.map((post) => (
-        <Post postDetails={post} key={post?._id} />
-      ))}
     </div>
   );
 };

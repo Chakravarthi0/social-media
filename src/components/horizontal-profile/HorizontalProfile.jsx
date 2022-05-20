@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { PrimaryButton, PrimaryOutlinedButton } from "../";
+import { PrimaryButton, PrimaryOutlinedButton, ProfileImage } from "../";
 import { followUser, unFollowUser } from "../../features";
 
 const HorizontalProfile = ({
@@ -24,13 +24,13 @@ const HorizontalProfile = ({
     >
       <div className="flex gap-3">
         <div className="w-12 h-12">
-          <img
-            className="rounded-full shadow-sm"
-            src={userProfileUrl}
-            alt="user image"
+          <ProfileImage
+            profileUrl={userProfileUrl}
+            firstName={firstName}
+            lastName={lastName}
           />
         </div>
-        <div className="flex flex-col items-center justify-center gap-y-0">
+        <div className="flex flex-col gap-y-0">
           <p>{`${firstName} ${lastName}`}</p>
           <p className="text-slate-400">@{username}</p>
         </div>

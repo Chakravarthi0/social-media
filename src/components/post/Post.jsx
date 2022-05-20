@@ -15,8 +15,9 @@ import {
   removeBookmark,
 } from "../../features";
 import { useDetectClick } from "../../hooks";
-import { DefaultProfilePic } from "../";
-import toast from "react-hot-toast";
+import { formatDate } from "../../utils";
+import { copyPostUrlTOClipboard } from "../../utils";
+import { ProfileImage } from "../profileImage/ProfileImage";
 
 const Post = ({ postDetails }) => {
   const { content, username, id: postId, likes } = postDetails;
@@ -33,23 +34,28 @@ const Post = ({ postDetails }) => {
   } = useSelector((state) => state);
   const currentUserDetails = users?.find((user) => user.username === username);
 
-  const navigate = useNavigate();
   const toggleShowOptions = () => {
     setShowPostOptions((prev) => !prev);
   };
   useDetectClick(optionsModalRef, setShowPostOptions);
-  const copyPostUrlTOClipboard = async () => {
-    await navigator.clipboard.writeText(
-      `https://sweet-cucurucho-5e95a3.netlify.app/posts/${postId}`
-    );
-    toast.success("Link copied to clipboard");
+  const navigate = useNavigate();
+
+  const redirectToProfile = (event, target) => {
+    event.stopPropagation();
+    navigate(`/profile/${target}`);
   };
 
   return (
-    <div className="relative flex gap-x-3 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700">
+    <div
+      className="relative flex gap-x-3 my-3 rounded-xl p-5 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+      onClick={() => navigate(`/posts/${postId}`)}
+    >
       <div
         className="absolute top-0 right-5 cursor-pointer text-2xl"
-        onClick={() => toggleShowOptions()}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleShowOptions();
+        }}
       >
         <MdOutlineMoreHoriz />
       </div>
@@ -62,7 +68,8 @@ const Post = ({ postDetails }) => {
             <>
               <div
                 className="flex gap-2 justify-center items-center hover:text-blue-500"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   dispatch(setEditingPost(postDetails));
                   dispatch(openPostModal());
                 }}
@@ -72,7 +79,8 @@ const Post = ({ postDetails }) => {
               </div>
               <div
                 className="flex gap-2 justify-center items-center mt-2 hover:text-red-600"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   dispatch(deletePost({ postId: postDetails?._id, token }));
                   toggleShowOptions();
                 }}
@@ -86,7 +94,8 @@ const Post = ({ postDetails }) => {
             ) ? (
             <div
               className="flex gap-2 justify-center items-center mt-2 hover:text-red-600"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 dispatch(
                   unFollowUser({ idToUnFollow: currentUserDetails?._id, token })
                 );
@@ -98,7 +107,8 @@ const Post = ({ postDetails }) => {
           ) : (
             <div
               className="flex gap-2 justify-center items-center hover:text-blue-500"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 dispatch(
                   followUser({ idToFollow: currentUserDetails?._id, token })
                 );
@@ -110,31 +120,32 @@ const Post = ({ postDetails }) => {
           )}
         </div>
       )}
-      <div className="w-12 h-12 flex-shrink-0">
-        {currentUserDetails?.profileUrl ? (
-          <img
-            className="rounded-full shadow-sm"
-            src={currentUserDetails?.profileUrl}
-            alt="user image"
-          />
-        ) : (
-          <DefaultProfilePic>
-            {currentUserDetails?.firstName[0]} {currentUserDetails?.lastName[0]}
-          </DefaultProfilePic>
-        )}
+      <div
+        className="w-12 h-12 flex-shrink-0"
+        onClick={(event) =>
+          redirectToProfile(event, currentUserDetails?.username)
+        }
+      >
+        <ProfileImage
+          profileUrl={currentUserDetails?.profileUrl}
+          firstName={currentUserDetails?.firstName}
+          lastName={currentUserDetails?.lastName}
+        />
       </div>
       <div className="w-[100%]">
-        <div className="flex flex-col mb-3">
+        <div
+          className="flex flex-col mb-3"
+          onClick={(event) =>
+            redirectToProfile(event, currentUserDetails?.username)
+          }
+        >
           <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
           <p className="text-slate-400">@{username}</p>
         </div>
-        <div
-          className="cursor-pointer"
-          onClick={() => navigate(`/posts/${postId}`)}
-        >
-          {content}
-        </div>
-        <p className="text-slate-400">{postDetails?.createdAt}</p>
+        <div>{content}</div>
+        <p className="text-slate-400 mt-2">
+          {formatDate(postDetails?.createdAt)}
+        </p>
         <div className="mt-5 flex justify-between">
           <div className="flex justify-center gap-1">
             {postDetails?.likes?.likedBy.find(
@@ -142,18 +153,20 @@ const Post = ({ postDetails }) => {
             ) ? (
               <button
                 className="material-icons text-red-500 cursor-pointer"
-                onClick={() =>
-                  dispatch(removeLike({ postId: postDetails?._id, token }))
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(removeLike({ postId: postDetails?._id, token }));
+                }}
               >
                 favorite
               </button>
             ) : (
               <button
                 className="material-icons hover:text-red-500 cursor-pointer"
-                onClick={() =>
-                  dispatch(addLike({ postId: postDetails?._id, token }))
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(addLike({ postId: postDetails?._id, token }));
+                }}
               >
                 favorite_border
               </button>
@@ -163,27 +176,32 @@ const Post = ({ postDetails }) => {
           <div className="flex justify-center gap-1">
             <button
               className="material-icons hover:text-blue-500 cursor-pointer"
-              onClick={() => navigate(`/posts/${postId}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/posts/${postId}`);
+              }}
             >
               chat_bubble_outline
             </button>
-            <p>30</p>
+            <p>{postDetails?.comments.length}</p>
           </div>
           {bookmarks?.find((id) => id === postDetails._id) ? (
             <button
               className="material-icons text-blue-500 cursor-pointer"
-              onClick={() =>
-                dispatch(removeBookmark({ token, postId: postDetails?._id }))
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(removeBookmark({ token, postId: postDetails?._id }));
+              }}
             >
               bookmark
             </button>
           ) : (
             <button
               className="material-icons hover:text-blue-500 cursor-pointer"
-              onClick={() =>
-                dispatch(addBookmark({ token, postId: postDetails?._id }))
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(addBookmark({ token, postId: postDetails?._id }));
+              }}
             >
               bookmark_border
             </button>
@@ -191,7 +209,10 @@ const Post = ({ postDetails }) => {
 
           <button
             className="material-icons hover:text-blue-500 cursor-pointer"
-            onClick={copyPostUrlTOClipboard}
+            onClick={(e) => {
+              e.stopPropagation();
+              copyPostUrlTOClipboard(postId);
+            }}
           >
             share
           </button>

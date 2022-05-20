@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import { signInUser } from "../../features";
 import { PrimaryButton, PrimaryOutlinedButton, LoaderOverlay } from "../";
 import { PasswordInput } from "../";
+import { Logo } from "../logo/Logo";
 
 const SigninCard = () => {
   const dispatch = useDispatch();
-  const { loading: authLoading } = useSelector(
-    (state) => state.auth
-  );
+  const { loading: authLoading } = useSelector((state) => state.auth);
   const [signInInput, setSignInInput] = useState({
     userName: "",
     password: "",
@@ -75,9 +74,10 @@ const SigninCard = () => {
   };
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col ">
-      {authLoading && <LoaderOverlay/>}
+      {authLoading && <LoaderOverlay />}
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-        <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full dark:bg-slate-900">
+        <Logo fontSize={"text-5xl"} />
+        <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full dark:bg-slate-900 mt-10">
           <h1 className="mb-8 text-3xl text-center dark:text-white">Sign In</h1>
 
           <label>UserName</label>

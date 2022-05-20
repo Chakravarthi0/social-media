@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import { MdOutlineMoreHoriz } from "react-icons/md";
-import { DefaultProfilePic, PrimaryButton, PrimaryOutlinedButton } from "../";
+import { PrimaryButton, PrimaryOutlinedButton } from "../";
 import { useDetectClick } from "../../hooks";
-import { deleteComment, editComment, editPost } from "../../features";
+import { deleteComment, editComment } from "../../features";
 import toast from "react-hot-toast";
+import { ProfileImage } from "../profileImage/ProfileImage";
 
 const Comment = ({ commentDetails, postId }) => {
   const {
@@ -46,6 +48,13 @@ const Comment = ({ commentDetails, postId }) => {
     } else {
       toast.error("Comment cannot be empty");
     }
+  };
+
+  const navigate = useNavigate();
+
+  const redirectToProfile = (event, target) => {
+    event.stopPropagation();
+    navigate(`/profile/${target}`);
   };
 
   return (
@@ -95,22 +104,25 @@ const Comment = ({ commentDetails, postId }) => {
         )}
 
         <div className="flex gap-x-2 mt-2">
-          <div className="w-12 h-12 flex-shrink-0 ">
-            {currentUserDetails?.profileUrl ? (
-              <img
-                className="rounded-full shadow-sm"
-                src={currentUserDetails?.profileUrl}
-                alt="user image"
-              />
-            ) : (
-              <DefaultProfilePic>
-                {currentUserDetails?.firstName[0]}{" "}
-                {currentUserDetails?.lastName[0]}
-              </DefaultProfilePic>
-            )}
+          <div
+            className="w-12 h-12 flex-shrink-0 cursor-pointer "
+            onClick={(event) =>
+              redirectToProfile(event, currentUserDetails?.username)
+            }
+          >
+            <ProfileImage
+              profileUrl={currentUserDetails?.profileUrl}
+              firstName={currentUserDetails?.firstName}
+              lastName={currentUserDetails?.lastName}
+            />
           </div>
           <div className="flex flex-col w-[100%]">
-            <div className="flex flex-col mb-2">
+            <div
+              className="flex flex-col mb-2 cursor-pointer"
+              onClick={(event) =>
+                redirectToProfile(event, currentUserDetails?.username)
+              }
+            >
               <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
               <p className="text-slate-400">@{currentUserDetails?.username}</p>
             </div>
@@ -134,8 +146,6 @@ const Comment = ({ commentDetails, postId }) => {
             ) : (
               <>
                 <div className="my-1">{commentDetails?.content}</div>
-
-                <p className="text-slate-400">{commentDetails?.createdAt}</p>
               </>
             )}
           </div>

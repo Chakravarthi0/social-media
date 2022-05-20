@@ -22,8 +22,9 @@ import {
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
-  DefaultProfilePic,
+  ProfileImage,
   Loader,
+  Logo,
 } from "../../components";
 
 const SideBar = () => {
@@ -45,6 +46,9 @@ const SideBar = () => {
   return (
     <div className="hidden sm:flex flex-col justify-between sticky h-screen top-0 py-3">
       <ul className="p-4 flex flex-col gap-y-5 bg-slate-100 rounded dark:bg-slate-800">
+        <li className="ml-2 hidden xl:block">
+          <Logo fontSize={"text-4xl"} />
+        </li>
         <li>
           <NavLink
             to={"/home"}
@@ -167,24 +171,19 @@ const SideBar = () => {
         onClick={() => navigate(`/profile/${currentUserDetails?.username}`)}
       >
         <div className="w-12 h-12 flex-shrink-0 text-lg">
-          {uploadingImg ? (
-            <Loader />
-          ) : currentUserDetails?.profileUrl ? (
-            <img
-              className="rounded-full shadow-sm  w-[100%] h-[100%]"
-              src={currentUserDetails?.profileUrl}
-              alt="user image"
-            />
-          ) : (
-            <DefaultProfilePic>
-              {currentUserDetails?.firstName[0] +
-                currentUserDetails?.lastName[0]}
-            </DefaultProfilePic>
-          )}
+          <ProfileImage
+            profileUrl={currentUserDetails?.profileUrl}
+            firstName={currentUserDetails?.firstName}
+            lastName={currentUserDetails?.lastName}
+          />
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
-          <p>{`${currentUserDetails?.firstName} ${currentUserDetails?.lastName}`}</p>
-          <p className="text-slate-400">@{currentUserDetails?.username}</p>
+          <p>{`${currentUserDetails?.firstName || "N"} ${
+            currentUserDetails?.lastName || "A"
+          }`}</p>
+          <p className="text-slate-400">
+            @{currentUserDetails?.username || "na"}
+          </p>
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { v4 as uuid } from "uuid";
-import { formatDate } from "../utils/authUtils";
 
 /**
  * Posts can be added here.
@@ -9,14 +8,20 @@ import { formatDate } from "../utils/authUtils";
 export const posts = [
   {
     _id: uuid(),
-    content:
-      "dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+    content: "Hey there",
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
-    comments: [],
+    comments: [
+      {
+        content: "Hello",
+        _id: uuid(),
+        username: "joedoe",
+        createdAt: "11:15 PM May 18,2022",
+      },
+    ],
     username: "johndoe",
     createdAt: "11:13 PM May 18,2022",
     updatedAt: "11:13 PM May 18,2022",

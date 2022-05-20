@@ -10,7 +10,7 @@ import {
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
-  DefaultProfilePic,
+  ProfileImage,
   Loader,
 } from "../";
 import toast from "react-hot-toast";
@@ -19,10 +19,7 @@ const CreatePostModal = () => {
   const dispatch = useDispatch();
 
   const {
-    auth: {
-      userDetails: { profileUrl, firstName, lastName },
-      token,
-    },
+    auth: { userDetails: authUserDetails, token },
     user: { uploadingImg },
     post: { showPostModal, editingPost },
   } = useSelector((state) => state);
@@ -101,15 +98,12 @@ const CreatePostModal = () => {
         <div className="flex-none mt-3 h-12 w-12">
           {uploadingImg ? (
             <Loader />
-          ) : profileUrl ? (
-            <img
-              src={profileUrl}
-              className="flex-none w-12 h-12 rounded-full hidden sm:block"
-            />
           ) : (
-            <DefaultProfilePic>
-              {firstName?.[0] + lastName?.[0]}
-            </DefaultProfilePic>
+            <ProfileImage
+              profileUrl={authUserDetails?.profileUrl}
+              firstName={authUserDetails?.firstName}
+              lastName={authUserDetails?.lastName}
+            />
           )}
         </div>
         <form className="w-full px-4 relative">
