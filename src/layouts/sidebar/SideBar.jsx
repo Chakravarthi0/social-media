@@ -171,15 +171,11 @@ const SideBar = () => {
         onClick={() => navigate(`/profile/${currentUserDetails?.username}`)}
       >
         <div className="w-12 h-12 flex-shrink-0 text-lg">
-          {uploadingImg ? (
-            <Loader />
-          ) : (
-            <ProfileImage
-              profileUrl={currentUserDetails?.profileUrl}
-              firstName={currentUserDetails?.firstName}
-              lastName={currentUserDetails?.lastName}
-            />
-          )}
+          <ProfileImage
+            profileUrl={currentUserDetails?.profileUrl}
+            firstName={currentUserDetails?.firstName}
+            lastName={currentUserDetails?.lastName}
+          />
         </div>
         <div className=" flex-col gap-x-2 ml-3 hidden xl:flex">
           <p>{`${currentUserDetails?.firstName || "N"} ${
