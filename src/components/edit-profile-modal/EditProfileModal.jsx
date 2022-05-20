@@ -13,7 +13,18 @@ const EditProfileModal = ({ currentUser, setShowEditProfile }) => {
 
   useDetectClick(profileModalRef, setShowEditProfile);
 
-  const { token, userDetails } = useSelector((state) => state.auth);
+  const {
+    auth: {
+      token,
+      userDetails: { username },
+    },
+    user: { users },
+  } = useSelector((state) => state);
+
+  const getUserByUserName = (username) =>
+    users.filter((user) => user.username === username)[0];
+
+  const userDetails = getUserByUserName(username);
 
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/test-social-media/image/upload";
