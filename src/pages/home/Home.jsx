@@ -13,7 +13,7 @@ const Home = () => {
     user: { users },
   } = useSelector((state) => state);
   const authUserDetails = users.find(
-    (user) => user.username === authUser.username
+    (user) => user?.username === authUser?.username
   );
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [sortState, setSortState] = useState("Latest");
@@ -25,13 +25,13 @@ const Home = () => {
   useDetectClick(sortOptionsRef, setShowSortOptions);
 
   const getUserByUserName = (username) =>
-    users.filter((user) => user.username === username)[0];
+    users.filter((user) => user?.username === username)[0];
 
   const postsForAuthUser = posts?.filter((post) => {
     return (
-      post.username === authUserDetails?.username ||
+      post?.username === authUserDetails?.username ||
       getUserByUserName(post?.username)?.followers?.find(
-        (user) => user.username === authUserDetails.username
+        (user) => user?.username === authUserDetails?.username
       )
     );
   });
