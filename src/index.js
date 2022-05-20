@@ -24,12 +24,3 @@ root.render(
     </Router>
   </React.StrictMode>
 );
-// ReactDOM.render(
-//   <Router>
-//     <Toaster position="top-center" />
-//     <Provider store={store}>
-//       <App />
-//     </Provider>
-//   </Router>,
-//   document.getElementById("root")
-// );
