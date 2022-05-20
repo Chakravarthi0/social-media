@@ -46,7 +46,7 @@ const SideBar = () => {
   return (
     <div className="hidden sm:flex flex-col justify-between sticky h-screen top-0 py-3">
       <ul className="p-4 flex flex-col gap-y-5 bg-slate-100 rounded dark:bg-slate-800">
-        <li className="ml-2">
+        <li className="ml-2 hidden xl:block">
           <Logo fontSize={"text-4xl"} />
         </li>
         <li>
