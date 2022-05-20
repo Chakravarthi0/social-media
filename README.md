@@ -52,4 +52,13 @@ User can search for other users.
 
 - ### Share
 
-User can share the post link's.
+User can share the post's link.
+
+
+
+
+https://user-images.githubusercontent.com/57091383/169428367-b53e9b86-7d1c-45b9-8cea-e54008938381.mp4
+
+
+
+
