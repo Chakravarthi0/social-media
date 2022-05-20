@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { GiSettingsKnobs } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { FiTrendingUp } from "react-icons/fi";
 import { BsSortDown, BsSortUp } from "react-icons/bs";
-import { Post, CreatePost, Loader } from "../../components";
+import { Post, CreatePost, Loader, PrimaryButton } from "../../components";
 import { useDetectClick } from "../../hooks";
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
   );
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [sortState, setSortState] = useState("Latest");
+  const navigate = useNavigate();
   const toggleShowOptions = () => {
     setShowSortOptions((prev) => !prev);
   };
@@ -60,7 +62,7 @@ const Home = () => {
         <div className="flex justify-center items-center h-[70vh]">
           <Loader />
         </div>
-      ) : (
+      ) : filteredPosts?.length > 0 ? (
         <>
           <div className="relative flex justify-between items-center pl-5 pr-1">
             <h1 className="text-xl pt-7 mb-4">{sortState} posts</h1>
@@ -110,6 +112,13 @@ const Home = () => {
             <Post postDetails={post} key={post?._id} />
           ))}
         </>
+      ) : (
+        <div className="flex flex-col justify-center items-center mt-20">
+          <h1 className="text-3xl mb-5">No posts found here</h1>
+          <PrimaryButton clickHandler={() => navigate("/explore")}>
+            Go to explore page
+          </PrimaryButton>
+        </div>
       )}
     </div>
   );
